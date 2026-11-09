@@ -339,18 +339,20 @@ Diferencias de formulación (inofensivas): en Lean las densidades se miden en $[
 
 ## 10. Qué es conocido y qué es (posiblemente) nuevo
 
-**Conocido** (no se reclama novedad):
-- La respuesta afirmativa al Problema 281 y sus dos demostraciones: profinita/ergódica (Somani + GPT‑5.2 Pro; formalizada en Lean por Aristotle, Gemini 3 Flash y colaboradores [6]) y Davenport–Erdős + Rogers (KoishiChan) [2, 5]. Según fuentes secundarias, T. Tao tradujo además el argumento ergódico a lenguaje combinatorio usando la desigualdad maximal de Hardy–Littlewood; **no pude leer ese comentario directamente** (el sitio bloquea el acceso automatizado), así que la Sección 4 puede coincidir en lo esencial con él.
-- El teorema de Rogers [4, 5] (y su redescubrimiento por Simpson [8], según [5]) y el teorema de Davenport–Erdős [3, 4]; que la cyclicidad es esencial para Rogers [5]; las observaciones 8.1 y 8.2.
+**Conocido, o consecuencia directa de lo conocido** (no se reclama novedad):
+- La respuesta afirmativa al Problema 281 y sus dos demostraciones: la profinita (Somani + GPT‑5.2 Pro; formalizada en Lean por Aristotle, Gemini 3 Flash y colaboradores [6]; esa formalización usa medida de Haar en $\widehat{\mathbb{Z}}$, convergencia dominada y un argumento de tipo Dini) y la de Davenport–Erdős + Rogers (KoishiChan) [2, 5]. Según fuentes secundarias, T. Tao tradujo además el argumento ergódico a lenguaje combinatorio usando la desigualdad maximal de Hardy–Littlewood; **no pude leer ese comentario directamente** (el sitio bloquea el acceso automatizado), así que la Sección 4 puede coincidir en lo esencial con él.
+- El teorema de Rogers [4, 5] (y su redescubrimiento por Simpson [8], según [5]) y el teorema de Davenport–Erdős [3, 4]; que la ciclicidad es esencial para Rogers [5]; las observaciones 8.1 y 8.2.
+- El Teorema 3(a)–(c) es exactamente la combinación Rogers + Davenport–Erdős. El Teorema 2 está implícito en la versión del argumento profinito que usa el teorema ergódico de Birkhoff (casi todo desplazamiento tiene densidad igual a la medida de Haar del conjunto límite). El caso $a = 0$ del Teorema 4 (casi todo entero tiene al menos $r$ divisores en una sucesión de Behrend) se sigue de la desigualdad de Behrend [10] y es, hasta donde recuerdo, estándar en la teoría de conjuntos de múltiplos [9] (atribución de memoria, no contrastada con el texto en esta sesión).
 
-**Posiblemente nuevo** (no lo encontré en las fuentes consultadas; la búsqueda no puede ser exhaustiva):
-- La presentación finitaria con *solo Markov + König* para el enunciado original (Sección 3), y su formalización en Lean, independiente de la existente.
-- La fórmula exacta $\max_a \overline{d}(R(a)) = \max_a \underline{d}(R(a)) = \varepsilon^\ast$ ($= 1 - \delta^\ast$ en $\mathbb{Z}$) con el cuadro completo de qué debilitamientos de la hipótesis bastan y cuál no (Teoremas 2 y 3).
-- El Teorema 4 (multiplicidad uniforme) y su demostración por promedio sobre las primeras clases.
+**Aporte de esta nota** (no lo encontré en las fuentes consultadas; la búsqueda no puede ser exhaustiva, y en varios puntos la novedad es de forma más que de fondo):
+- La demostración finitaria del enunciado original con *solo Markov + König* (Sección 3) y su formalización en Lean, independiente de la existente y basada en una demostración distinta.
+- La verificación formal de enunciados más fuertes o complementarios: hipótesis con densidad inferior (`erdos_281_lower`), versión bilateral en $\mathbb{Z}$, teorema de Rogers, equivalencia con la elección homogénea y multiplicidad.
+- El cuadro completo de qué debilitamientos de la hipótesis bastan y cuál no (Teoremas 2 y 3, en particular 3(d)).
+- El Teorema 4 para elecciones arbitrarias y con uniformidad, con una demostración por promedio que no usa Rogers.
 - El Teorema 7.1 (grupos abelianos) junto con el Ejemplo 7.2, que muestra que allí el problema no se reduce a la elección homogénea.
 - La demostración por acoplamiento monótono del Lema 5.2 es probablemente folclore.
 
-**Limitaciones.** (1) No pude acceder al hilo original del foro ni a la conversación de ChatGPT; el estado del arte se reconstruyó con fuentes secundarias [5, 6, 17] y un espejo parcial del hilo. (2) Las partes no formalizadas no tienen verificación mecánica. (3) El Teorema 3(d) usa un teorema profundo citado, no demostrado aquí. (4) No se obtuvo ninguna versión cuantitativa (dependencia de $k$ respecto de $\varepsilon$), que en general no puede existir sin información sobre la sucesión.
+**Limitaciones.** (1) No pude acceder al hilo original del foro ni a la conversación de ChatGPT; el estado del arte se reconstruyó con fuentes secundarias [5, 6, 17] y un espejo parcial del hilo. (2) Las partes no formalizadas (Sección 9) no tienen verificación mecánica. (3) El Teorema 3(d) usa un teorema profundo citado, no demostrado aquí. (4) No se obtuvo ninguna versión cuantitativa (dependencia de $k$ respecto de $\varepsilon$), que en general no puede existir sin información sobre la sucesión.
 
 ---
 
