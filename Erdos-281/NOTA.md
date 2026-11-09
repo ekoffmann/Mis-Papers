@@ -318,7 +318,7 @@ Véanse `lean/README.md` (versiones, comandos, salida de `#print axioms`) y `ver
 |---|---|---|
 | `Erdos281.erdos_281`, `erdos_281_converse`, `erdos_281_iff` | Teorema 1: (H) ⟺ (C), sobre $\mathbb{N}$, clases representadas por naturales | **[PROBADO]** |
 | `Erdos281.erdos_281_zmod` | Teorema 1 con clases en `ZMod (n i)` | **[PROBADO]** |
-| `Erdos281.erdos_281_int` | Teorema 1 para subconjuntos de $\mathbb{Z}$ con densidad bilateral $\#(S \cap [-N,N])/(2N+1)$ (la forma del enunciado formal de [6]) | **[PROBADO]** |
+| `Erdos281.erdos_281_int` | Teorema 1 para subconjuntos de $\mathbb{Z}$ con densidad bilateral $\lvert S \cap [-N,N] \rvert / (2N+1)$ (la forma del enunciado formal de [6]) | **[PROBADO]** |
 | `Erdos281.erdos_281_strong` | Lema 3.1 + Proposición 3.2: si (C) falla al nivel $\varepsilon$, existe $b$ con $\lvert R(b) \cap [0,N) \rvert \ge (\varepsilon/2) N$ para $N$ arbitrariamente grandes | **[PROBADO]** |
 | `Erdos281.maximal_ineq` | Lema 4.1 (desigualdad maximal, constante 2) | **[PROBADO]** |
 | `Erdos281.erdos_281_strong_lower`, `erdos_281_lower` | Proposición 4.2 en la forma: si (C) falla al nivel $\varepsilon$, existe $b$ con $\lvert R(b) \cap [0,N) \rvert \ge (\varepsilon/2) N$ para **todo** $N$ grande; por tanto (H⁻) ⟹ (C) (Teorema 2, equivalencias) | **[PROBADO]** |

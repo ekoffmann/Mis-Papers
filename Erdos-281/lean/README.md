@@ -73,8 +73,8 @@ theorem rogers (k : ℕ) (n a : ℕ → ℕ) (N : ℕ) (hN : 0 < N) (hdvd : ∀ 
 | Sucesión $n_1 \lt n_2 \lt \cdots$ de enteros positivos | `n : ℕ → ℕ`, `StrictMono n`, `0 < n 0` (índices desde 0) |
 | Elección de clases $a_i \pmod{n_i}$ | `a : ℕ → ℕ` (un representante natural de cada clase) o `a : (i : ℕ) → ZMod (n i)` |
 | $m \equiv a_i \pmod{n_i}$ | `m ≡ a i [MOD n i]` (`Nat.ModEq`) o `(m : ZMod (n i)) = a i` |
-| No cubiertos por las primeras $k$ congruencias | `Unc n a k = {m | ∀ i, i < k → ¬ m ≡ a i [MOD n i]}` |
-| No cubiertos por ninguna | `UncInf n a = {m | ∀ i, ¬ m ≡ a i [MOD n i]}` |
+| No cubiertos por las primeras $k$ congruencias | `Unc n a k`: el conjunto de los `m` tales que `∀ i, i < k → ¬ m ≡ a i [MOD n i]` |
+| No cubiertos por ninguna | `UncInf n a`: el conjunto de los `m` tales que `∀ i, ¬ m ≡ a i [MOD n i]` |
 | $S \subseteq \mathbb{N}$ tiene densidad natural $d$ | `HasNatDensity S d`: `#(S ∩ [0,N)) / N → d` |
 | $S \subseteq \mathbb{Z}$ tiene densidad (bilateral) $d$ | `HasIntDensity S d`: `#(S ∩ [-N,N]) / (2N+1) → d` |
 | "la densidad … es menor que $\varepsilon$" | `∃ d, d < ε ∧ HasNatDensity (Unc n a k) d` (la densidad existe y es $\lt \varepsilon$) |
