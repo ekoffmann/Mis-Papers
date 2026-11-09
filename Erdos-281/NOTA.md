@@ -12,13 +12,15 @@ El **Problema 281** de Erdős–Graham [1, p. 29] pregunta:
 
 Lo que aporta esta nota:
 
-1. **Una demostración finitaria y autocontenida** (Sección 3): solo conteo doble, la desigualdad de Markov y el lema de König. No usa teoría de la medida, teoría ergódica, el teorema de Davenport–Erdős ni el de Rogers. **Está formalizada y verificada en Lean 4 + Mathlib en esta sesión** (Sección 9).
+1. **Una demostración finitaria y autocontenida** (Sección 3): solo conteo doble, la desigualdad de Markov y el lema de König. No usa teoría de la medida, teoría ergódica, el teorema de Davenport–Erdős ni el de Rogers. **Está formalizada y verificada en Lean 4 + Mathlib en esta sesión** (Sección 9), junto con el recíproco, la versión para subconjuntos de $\mathbb{Z}$ con densidad bilateral, la versión con hipótesis de densidad *inferior*, el teorema de Rogers y el teorema de multiplicidad: 18 teoremas, sin `sorry`.
 2. **Forma óptima** (Teoremas 2 y 3): para *cualquier* sucesión de módulos, el supremo sobre todas las elecciones de la densidad superior del conjunto no cubierto es exactamente $\varepsilon^\ast = \lim_k \max_a d_k(a)$, se alcanza, y se alcanza con *densidad natural existente*. En $\mathbb{Z}$, $\varepsilon^\ast = 1 - \delta^\ast$, donde $\delta^\ast$ es la densidad logarítmica del conjunto de múltiplos de los $n_i$. La hipótesis del problema puede debilitarse a "densidad *inferior* cero para toda elección", o a "densidad cero solo para la elección $a = 0$"; pero **no** a "densidad inferior cero solo para $a=0$".
-3. **Versión con multiplicidad** (Teorema 4): bajo la hipótesis del problema (y $n_1 \ge 2$), para todo $r$ casi todo entero satisface al menos $r$ de las congruencias, uniformemente en la elección de clases.
+3. **Versión con multiplicidad** (Teorema 4): bajo la hipótesis del problema (y $n_1 \ge 2$), para todo $r$ casi todo entero satisface al menos $r$ de las congruencias, uniformemente en la elección de clases. **Verificado en Lean.**
 4. **Grupos abelianos generales** (Teorema 5): el enunciado de Erdős–Graham sigue siendo cierto para clases laterales de subgrupos de índice finito (p. ej. retículos en $\mathbb{Z}^d$), donde el teorema de Rogers es falso y por tanto el atajo "basta mirar $a=0$" deja de valer (Ejemplo 7.2).
 5. Demostraciones cortas y autocontenidas del teorema de Rogers (Teorema 5.1; **verificado en Lean**) y de la dirección necesaria del teorema de Davenport–Erdős (Proposición 5.3).
 
 En la Sección 10 se separa con cuidado lo conocido de lo (posiblemente) nuevo.
+
+> **Abstract (English).** Erdős Problem 281 asks: if $n_1 \lt n_2 \lt \cdots$ is such that for every choice of residue classes $a_i \pmod{n_i}$ the integers satisfying none of the congruences have density $0$, must finitely many of the congruences already leave density $\lt \varepsilon$ uncovered, uniformly in the choice? This was answered affirmatively in January 2026 (a profinite/ergodic argument found with an AI system, and Davenport–Erdős plus Rogers' theorem). We give a short *finitary* proof — double counting, Markov's inequality and König's lemma, with no measure theory, ergodic theory, Davenport–Erdős or Rogers — and formalize it in Lean 4/Mathlib, together with the converse, the version for sets of integers with two-sided density, a strengthening assuming only *lower* density zero (via an elementary maximal inequality), Rogers' theorem, and a multiplicity version (18 theorems, no `sorry`). We also record the sharp form (the worst‑case uncovered density of the infinite system equals $\lim_k \max_a d_k(a)$, is attained, and is attained with an existing natural density; over $\mathbb{Z}$ it equals one minus the logarithmic density of the set of multiples), a multiplicity version, and an extension to cosets of finite‑index subgroups of abelian groups, where Rogers' theorem fails and the homogeneous choice is no longer extremal.
 
 ---
 
@@ -191,11 +193,16 @@ Equivalentemente, $d_k(a) \le d_k(0)$ para toda elección $a$.
 *Demostración.* Inducción sobre $N$, para todas las familias finitas a la vez. Si $N = 1$ ambos lados valen $1$ (o $0$ si la familia es vacía). Si $N \gt 1$, sea $p$ un primo con $N = p^e M$, $e \ge 1$, $p \nmid M$, y escribamos $n_i = p^{e_i} M_i$ con $e_i \le e$, $M_i \mid M$. Por el teorema chino del resto, $x \mapsto (u,v) = (x \bmod p^e, x \bmod M)$ es una biyección $\mathbb{Z}/N \to \mathbb{Z}/p^e \times \mathbb{Z}/M$, y $x \equiv a_i \pmod{n_i}$ equivale a "$u \equiv a_i \pmod{p^{e_i}}$ y $v \equiv a_i \pmod{M_i}$". Para $u \in \mathbb{Z}/p^e$ sea $I_u = \lbrace i : u \equiv a_i \ (\mathrm{mod}\ p^{e_i}) \rbrace$, y para $v \in \mathbb{Z}/M$ sea $J_v = \lbrace i : M_i \mid v \rbrace$. Entonces
 
 ```math
-\begin{aligned}
-\lvert \mathrm{LI} \rvert &= \sum_{u} \lvert \lbrace v : \exists i \in I_u,\ v \equiv a_i \ (M_i) \rbrace \rvert \ \ge\ \sum_{u} \lvert \lbrace v : \exists i \in I_u,\ M_i \mid v \rbrace \rvert && \text{(hipótesis de inducción para } M \lt N\text{)} \\
-&= \sum_{v} \lvert \lbrace u : \exists i \in J_v,\ u \equiv a_i \ (p^{e_i}) \rbrace \rvert \ \ge\ \sum_{v} \lvert \lbrace u : \exists i \in J_v,\ p^{e_i} \mid u \rbrace \rvert = \lvert \mathrm{LD} \rvert && \text{(lema de la cadena).}
-\end{aligned}
+\lvert \mathrm{LI} \rvert = \sum_{u} \lvert \lbrace v : \exists i \in I_u,\ v \equiv a_i \ (M_i) \rbrace \rvert \ \ge\ \sum_{u} \lvert \lbrace v : \exists i \in I_u,\ M_i \mid v \rbrace \rvert
 ```
+
+por la hipótesis de inducción para $M \lt N$, aplicada a cada subfamilia $I_u$. La última suma cuenta los pares $(u,v)$ tales que existe $i$ con $u \equiv a_i \pmod{p^{e_i}}$ y $M_i \mid v$; contándolos ahora por columnas,
+
+```math
+\sum_{u} \lvert \lbrace v : \exists i \in I_u,\ M_i \mid v \rbrace \rvert = \sum_{v} \lvert \lbrace u : \exists i \in J_v,\ u \equiv a_i \ (p^{e_i}) \rbrace \rvert \ \ge\ \sum_{v} \lvert \lbrace u : \exists i \in J_v,\ p^{e_i} \mid u \rbrace \rvert = \lvert \mathrm{LD} \rvert
+```
+
+por el lema de la cadena, que es el siguiente.
 
 *Lema de la cadena:* si $J \ne \emptyset$, sea $i_0 \in J$ con $e_{i_0}$ mínimo. Los subgrupos $p^{e_i}\mathbb{Z}/p^e$ están encajados, así que $\lbrace u : \exists i \in J,\ p^{e_i} \mid u \rbrace = \lbrace u : p^{e_{i_0}} \mid u \rbrace$ tiene $p^{e - e_{i_0}}$ elementos, los mismos que la única clase $\lbrace u \equiv a_{i_0} \ (p^{e_{i_0}}) \rbrace \subseteq \lbrace u : \exists i \in J,\ u \equiv a_i \ (p^{e_i}) \rbrace$. ∎
 
@@ -219,7 +226,7 @@ Por inclusión–exclusión, $f_B(1)$ es la densidad de $M(B)$, y para $s \gt 1$
 
 *Demostración.* Sea $P$ el conjunto (finito) de primos que dividen a algún elemento de $B$, y sean $(X_p)_{p \in P}$ variables independientes exponenciales de parámetro $1$. Para $s \gt 0$ sea $G_p(s) = \lfloor X_p / (s \log p) \rfloor$. Entonces $\Pr(G_p(s) \ge j) = p^{-sj}$, así que para todo entero $c$ con factores primos en $P$, $\Pr(\forall p : G_p(s) \ge v_p(c)) = c^{-s}$. Sea $\mathcal{E}(s)$ el suceso "existe $b \in B$ con $G_p(s) \ge v_p(b)$ para todo $p$". Por inclusión–exclusión (la intersección de los sucesos correspondientes a $b \in J$ es el suceso correspondiente a $\operatorname{mcm}(J)$), $\Pr(\mathcal{E}(s)) = f_B(s)$. Pero $G_p(s)$ decrece puntualmente al crecer $s$, luego $\mathcal{E}(s') \subseteq \mathcal{E}(s)$ si $s \le s'$. ∎
 
-**Proposición 5.3 (Davenport–Erdős [3], dirección necesaria).** Sea $A = \lbrace n_1 \lt n_2 \lt \cdots \rbrace$, $\delta_k = d(M(\lbrace n_1,\dots,n_k \rbrace))$, $\delta^\ast = \lim \delta_k$, y $R$ el conjunto de enteros positivos no divisibles por ningún $n_i$. Entonces $\overline{d}(R) \ge 1 - \delta^\ast$.
+**Proposición 5.3 (Davenport–Erdős [3], dirección necesaria).** Sea $A = \lbrace n_1 \lt n_2 \lt \cdots \rbrace$, $A_k = \lbrace n_1,\dots,n_k \rbrace$, $\delta_k = d(M(A_k))$, $\delta^\ast = \lim \delta_k$, y $R$ el conjunto de enteros positivos no divisibles por ningún $n_i$ (el complemento de $M(A) = \bigcup_k M(A_k)$). Entonces $\overline{d}(R) \ge 1 - \delta^\ast$.
 
 *Demostración.* Sea $s \gt 1$. Por el Lema 5.2 y convergencia monótona, $\sum_{m \in M(A)} m^{-s} = \lim_k \sum_{m \in M(A_k)} m^{-s} \le \zeta(s)\delta^\ast$, luego
 
@@ -305,19 +312,26 @@ Cada sumando es $\lt \varepsilon c_j$, luego $d(W) \lt \varepsilon$. ∎
 
 Véanse `lean/README.md` (versiones, comandos, salida de `#print axioms`) y `verificacion/salida.txt`.
 
-**Formalizado en esta sesión** (archivos `lean/Erdos281.lean` y `lean/Rogers.lean`):
+**Formalizado en esta sesión** (proyecto `lean/`, 2394 líneas; compilación limpia con código de salida 0, sin `sorry`, y solo los axiomas `propext`, `Classical.choice`, `Quot.sound`):
 
 | Enunciado en Lean | Corresponde a | Etiqueta |
 |---|---|---|
-| `Erdos281.erdos_281` | Teorema 1, dirección (H) ⟹ (C), sobre $\mathbb{N}$ con clases representadas por naturales | ver `lean/README.md` |
-| `Erdos281.erdos_281_zmod` | Lo mismo con clases en `ZMod (n i)` (forma del enunciado de [6]) | ver `lean/README.md` |
-| `Erdos281.erdos_281_converse` | (C) ⟹ (H) | ver `lean/README.md` |
-| `Erdos281.erdos_281_strong` | Proposición 3.2 + Lema 3.1 en la forma: si (C) falla al nivel $\varepsilon$, existe $b$ con $\lvert R(b) \cap [0,N) \rvert \ge (\varepsilon/2) N$ para $N$ arbitrariamente grandes | ver `lean/README.md` |
-| `Rogers.rogers`, `Rogers.rogers_uncovered` | Teorema 5.1 | ver `lean/README.md` |
+| `Erdos281.erdos_281`, `erdos_281_converse`, `erdos_281_iff` | Teorema 1: (H) ⟺ (C), sobre $\mathbb{N}$, clases representadas por naturales | **[PROBADO]** |
+| `Erdos281.erdos_281_zmod` | Teorema 1 con clases en `ZMod (n i)` | **[PROBADO]** |
+| `Erdos281.erdos_281_int` | Teorema 1 para subconjuntos de $\mathbb{Z}$ con densidad bilateral $\#(S \cap [-N,N])/(2N+1)$ (la forma del enunciado formal de [6]) | **[PROBADO]** |
+| `Erdos281.erdos_281_strong` | Lema 3.1 + Proposición 3.2: si (C) falla al nivel $\varepsilon$, existe $b$ con $\lvert R(b) \cap [0,N) \rvert \ge (\varepsilon/2) N$ para $N$ arbitrariamente grandes | **[PROBADO]** |
+| `Erdos281.maximal_ineq` | Lema 4.1 (desigualdad maximal, constante 2) | **[PROBADO]** |
+| `Erdos281.erdos_281_strong_lower`, `erdos_281_lower` | Proposición 4.2 en la forma: si (C) falla al nivel $\varepsilon$, existe $b$ con $\lvert R(b) \cap [0,N) \rvert \ge (\varepsilon/2) N$ para **todo** $N$ grande; por tanto (H⁻) ⟹ (C) (Teorema 2, equivalencias) | **[PROBADO]** |
+| `Rogers.rogers`, `Rogers.rogers_uncovered`, `Erdos281.density_le_homogeneous` | Teorema 5.1 (Rogers) y Teorema 3(a) | **[PROBADO]** |
+| `Erdos281.uniform_of_homogeneous`, `uniform_iff_homogeneous` | Teorema 3(c), equivalencia (C) ⟺ $\delta_k \to 1$ | **[PROBADO]** |
+| `Erdos281.tail_uniform` | Lema 6.1 | **[PROBADO]** |
+| `Erdos281.erdos_281_multiplicity`, `erdos_281_multiplicity_of_hyp`, `few_congruences_density_zero` | Teorema 4 | **[PROBADO]** |
 
-Diferencias de formulación (inofensivas): en Lean las densidades se miden en $[0,N)$ en vez de $[1,N]$; el período usado es $\prod_{i \lt k} n_i$ en lugar del mínimo común múltiplo; los índices empiezan en $0$.
+Diferencias de formulación (inofensivas): en Lean las densidades se miden en $[0,N)$ en vez de $[1,N]$; el período usado es $\prod_{i \lt k} n_i$ en lugar del mínimo común múltiplo; los índices empiezan en $0$; "densidad inferior cero" se expresa como "para todo $c \gt 0$ hay $N$ arbitrariamente grandes con menos de $cN$ no cubiertos en $[0,N)$".
 
-**No formalizado** (queda **[PLAUSIBLE]** con demostración completa en esta nota): Proposición 4.2 y Teorema 2(b) con densidad natural; Proposición 5.3; Teorema 3(b)–(d) (el punto (d) depende además del teorema de Erdős–Ford citado); Teorema 4; Teorema 7.1.
+**No formalizado** (queda **[PLAUSIBLE]**, con demostración completa en esta nota): el valor exacto $d(R(b)) = \rho$ de las Proposiciones 3.2 y 4.2 y del Teorema 2(b) (formalmente solo se tiene la cota $\varepsilon/2$); la Proposición 5.3 y con ella el Teorema 3(b) y la implicación (H₀) ⟹ (C) del Teorema 3(c); el Teorema 3(d) (que depende además del teorema de Erdős–Ford citado); el Teorema 7.1.
+
+<!-- REVISION_INDEPENDIENTE -->
 
 **Comprobaciones numéricas [NUMÉRICO]** (`verificacion/checks.py`): Rogers exhaustivo sobre 367 familias aleatorias de módulos (todas las elecciones); monotonía de $f_B$ y $f_B(1) = d(M(B))$ en 300 conjuntos; fallo de Rogers en $(\mathbb{Z}/2)^2$ ($3 \lt 4$); identidad de promedio del Lema 6.1 (exacta, con fracciones); desigualdad maximal del Lema 4.1 en 300 casos; tabla de multiplicidad para módulos primos.
 

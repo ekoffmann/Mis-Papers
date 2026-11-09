@@ -1,0 +1,57 @@
+# Registro de verificacion - Problema 281 de Erdos (Lean 4 + Mathlib)
+# Fecha: 2026-11-09T21:48:54Z
+# Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
+# Mathlib rev: 56a005855ea17e0b0958f73ec801ae140b0a1679
+# Comando: lake build   (desde Erdos-281/lean, compilacion limpia de los modulos Nous.*)
+# Codigo de salida: 0
+# sha256 de los fuentes:
+#   400a5528426f0d4939f2b4395e7f75acf23d702457fd200659b7e3ff4d251695  Nous.lean
+#   babfdb3abd4216ad98fba4226a7da30ed6c7e4a4c341a2b897ab12e90e6a4603  Nous/Behrend.lean
+#   8fd82d0668893e55df3d781f82d39d21e34ad73d98b417985e5fb5d5780cc67b  Nous/Erdos281.lean
+#   c402350adba20041f2878c5abdf14ed7fe79d3015633d8279b14e4ee3219f4e6  Nous/Erdos281Int.lean
+#   4e730b7730e01dd49865fe170c2c1a2d6f9b272e03446412a8dbded3d9b3f6a9  Nous/LowerDensity.lean
+#   78d8d12102ac175a2bb8bb1eb3fba46aaf00d08a57090cf8d98036d17c4b47f3  Nous/Multiplicity.lean
+#   c1ca34945b1bd9e6d37693fc0ef1d158f98dc1fe1d68434e447fdffd6ae09b21  Nous/Resumen.lean
+#   fa51d3a2e2eeb5c0b2559a42975cbc9c0433c0bd913a92cca3090717390395ad  Nous/Rogers.lean
+# Auditoria de palabras prohibidas (sorry|admit|axiom|native_decide|unsafe|implemented_by|opaque|extern): 0 coincidencias
+#
+# Salida de #print axioms (una linea por teorema; las de Nous/Resumen.lean cubren todos):
+Nous/Rogers.lean:342:0: 'Rogers.rogers' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Rogers.lean:343:0: 'Rogers.rogers_uncovered' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Erdos281.lean:809:0: 'Erdos281.erdos_281' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Erdos281.lean:810:0: 'Erdos281.erdos_281_converse' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Erdos281.lean:811:0: 'Erdos281.erdos_281_strong' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Erdos281.lean:812:0: 'Erdos281.erdos_281_zmod' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Behrend.lean:77:0: 'Erdos281.density_le_homogeneous' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Behrend.lean:78:0: 'Erdos281.uniform_of_homogeneous' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Multiplicity.lean:375:0: 'Erdos281.tail_uniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Multiplicity.lean:376:0: 'Erdos281.erdos_281_multiplicity' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Multiplicity.lean:377:0: 'Erdos281.erdos_281_multiplicity_of_hyp' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Multiplicity.lean:378:0: 'Erdos281.few_congruences_density_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Erdos281Int.lean:301:0: 'Erdos281.erdos_281_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/LowerDensity.lean:418:0: 'Erdos281.maximal_ineq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/LowerDensity.lean:419:0: 'Erdos281.erdos_281_strong_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/LowerDensity.lean:420:0: 'Erdos281.erdos_281_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:38:0: 'Erdos281.erdos_281' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:39:0: 'Erdos281.erdos_281_converse' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:40:0: 'Erdos281.erdos_281_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:41:0: 'Erdos281.erdos_281_strong' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:42:0: 'Erdos281.erdos_281_zmod' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:43:0: 'Erdos281.erdos_281_int' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:44:0: 'Rogers.rogers' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:45:0: 'Rogers.rogers_uncovered' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:46:0: 'Erdos281.density_le_homogeneous' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:47:0: 'Erdos281.uniform_of_homogeneous' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:48:0: 'Erdos281.uniform_iff_homogeneous' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:49:0: 'Erdos281.tail_uniform' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:50:0: 'Erdos281.erdos_281_multiplicity' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:51:0: 'Erdos281.erdos_281_multiplicity_of_hyp' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:52:0: 'Erdos281.few_congruences_density_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:53:0: 'Erdos281.maximal_ineq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:54:0: 'Erdos281.erdos_281_strong_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+Nous/Resumen.lean:55:0: 'Erdos281.erdos_281_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+#
+# Ultimas lineas de la salida de lake build:
+info: Nous/Resumen.lean:55:0: 'Erdos281.erdos_281_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [9054/9055] Built Nous (4.2s)
+Build completed successfully (9055 jobs).

@@ -9,6 +9,8 @@ Su objetivo es centralizar el acceso a mis publicaciones y facilitar su consulta
 - Papers publicados en revistas indexadas
 - Trabajos académicos presentados en congresos y seminarios
 - Material complementario (datasets, código, presentaciones)
+- Notas de investigación en curso (sin revisión por pares):
+  - [`Erdos-281/`](Erdos-281/) — Problema 281 de Erdős (congruencias recubridoras): nota matemática con verificación formal en Lean 4 + Mathlib y comprobaciones numéricas. Elaborada con asistencia de IA.
 
 ---
 
