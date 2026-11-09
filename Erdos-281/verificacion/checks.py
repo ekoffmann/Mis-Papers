@@ -56,6 +56,7 @@ def dens_multiples(B):
 
 def check_monotone(trials=300):
     grid = [0.05 * i for i in range(1, 121)]  # s en (0, 6]
+    tested = 0
     for _ in range(trials):
         k = random.randint(1, 5)
         B = random.sample(range(2, 40), k)
@@ -64,7 +65,8 @@ def check_monotone(trials=300):
         vals = [f_B(B, s) for s in grid]
         assert all(vals[i] >= vals[i + 1] - 1e-12 for i in range(len(vals) - 1)), B
         assert abs(f_B(B, 1.0) - float(dens_multiples(B))) < 1e-12, B
-    return trials
+        tested += 1
+    return tested
 
 def check_dirichlet_inequality():
     """sum_{m in M(B), m<=X} m^{-s}  <=  zeta(s) d(M(B))  (suma parcial <= suma total <= cota)."""
@@ -97,6 +99,7 @@ def check_noncyclic():
 #    promedio_{a_1..a_j} d(W \ U_{i<=j} (a_i + n_i Z)) = d(W) * prod_{i<=j} (1 - 1/n_i)
 # ---------------------------------------------------------------------------------------------
 def check_average_identity(trials=60):
+    tested = 0
     for _ in range(trials):
         j = random.randint(1, 3)
         head = random.sample(range(2, 9), j)
@@ -116,7 +119,8 @@ def check_average_identity(trials=60):
         for n in head:
             c *= Fraction(n - 1, n)
         assert avg == Fraction(len(W), N) * c, (head, tail)
-    return trials
+        tested += 1
+    return tested
 
 # ---------------------------------------------------------------------------------------------
 # 5. Multiplicidad: para modulos = primeros primos, max sobre elecciones de la densidad de
@@ -157,6 +161,30 @@ def check_maximal(trials=300):
         assert bad <= 2 * len(E) / lam + 1e-9, (N, sorted(E), lam, bad)
     return trials
 
+def maximal_best_constant(Nmax=12):
+    """Exhaustivo: para todo N <= Nmax y todo E no vacio de Z/N, calcula
+    sup_lam  lam * #{t : existe L<=N con |E ∩ (t,t+L]| > lam*L} / |E|
+    = max_v  v * #{t : M(t) >= v} / |E|,  con  M(t) = max_L |E ∩ (t,t+L]| / L."""
+    best = Fraction(0)
+    for N in range(1, Nmax + 1):
+        for mask in range(1, 1 << N):
+            ind = [(mask >> (x % N)) & 1 for x in range(2 * N + 1)]
+            e = sum(ind[:N])
+            M = []
+            for t in range(N):
+                s, m = 0, Fraction(0)
+                for L in range(1, N + 1):
+                    s += ind[t + L]
+                    if s * m.denominator > m.numerator * L:
+                        m = Fraction(s, L)
+                M.append(m)
+            for v in set(M):
+                if v > 0:
+                    ratio = v * sum(1 for x in M if x >= v) / e
+                    if ratio > best:
+                        best = ratio
+    return best
+
 # ---------------------------------------------------------------------------------------------
 # 7. Experimento del argumento del arbol (Prop. finitaria) en un ejemplo no-Behrend:
 #    modulos n_i = cuadrados de primos, a* = 0 (R(0) = libres de cuadrados, rho = 6/pi^2).
@@ -190,6 +218,7 @@ if __name__ == "__main__":
     for mods, vals in check_multiplicity():
         print("     ", mods, vals)
     print("6. Lema maximal en Z/N (constante 2):", check_maximal(), "casos, 0 violaciones")
+    print("   Constante optima (exhaustivo, todo E en Z/N, N <= 12):", maximal_best_constant(12))
     print("7. Experimento del arbol (n_i = p^2, a* = 0): (k, rho_k, densidad empirica desplazada en [1,2e5])")
     for row in tree_experiment():
         print("     ", row)

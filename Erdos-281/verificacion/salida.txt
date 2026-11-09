@@ -1,5 +1,5 @@
 1. Rogers (exhaustivo, familias aleatorias): 367 familias verificadas, 0 contraejemplos
-2. f_B(s) decreciente y f_B(1)=d(M(B)): 300 conjuntos B verificados
+2. f_B(s) decreciente y f_B(1)=d(M(B)): 278 conjuntos B verificados
    Desigualdad de Dirichlet (B, s, f_B(s), d(M(B))):
       ([4, 6, 9], 1.05, 0.363517, 0.388889)
       ([4, 6, 9], 1.2, 0.295673, 0.388889)
@@ -30,6 +30,7 @@
       [2, 3, 5, 7] ['8/35', '2/3', '14/15']
       [2, 3, 5, 7, 11] ['16/77', '724/1155', '10/11']
 6. Lema maximal en Z/N (constante 2): 300 casos, 0 violaciones
+   Constante optima (exhaustivo, todo E en Z/N, N <= 12): 1
 7. Experimento del arbol (n_i = p^2, a* = 0): (k, rho_k, densidad empirica desplazada en [1,2e5])
       (1, 0.75, 0.75)
       (2, 0.66667, 0.66666)
@@ -39,6 +40,6 @@
       (6, 0.61808, 0.61808)
 TODAS LAS COMPROBACIONES PASARON
 
-real	0m40.970s
-user	0m40.806s
-sys	0m0.011s
+real	0m41.117s
+user	0m40.723s
+sys	0m0.024s

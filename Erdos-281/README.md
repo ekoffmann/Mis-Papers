@@ -42,13 +42,13 @@ Las citas [n] remiten a la lista de referencias (Sección 7). Etiquetas: **[PROB
 | 9 | Valor exacto: $\max_a \overline{d}(R(a)) = \max_a \underline{d}(R(a)) = \varepsilon^\ast$, con densidad natural existente | NOTA §4 (Prop. 4.2); la cota inferior $\varepsilon/2$ sí está formalizada (fila 8) | Demostración informal | Toda sucesión | **[PLAUSIBLE]** |
 | 10 | $\overline{d}(R(0)) = 1 - \delta^\ast$ (dirección necesaria de Davenport–Erdős) | NOTA §5.2; [3, 4]; comprobación numérica de la monotonía | Demostración informal + literatura + numérico | $\mathbb{Z}$ | **[PLAUSIBLE]**; el teorema completo es **[LITERATURA]**, ALTA |
 | 11 | "Densidad inferior cero solo para $a = 0$" no basta | NOTA §5.3(d); usa [11, 12, 13] | Demostración informal + literatura | Ejemplo por bloques | **[PLAUSIBLE]** (depende de un teorema citado) |
-| 12 | Extensión a grupos abelianos | NOTA §7 | Demostración informal | Sucesiones equidistribuidas (p. ej. Følner) | **[PLAUSIBLE]** |
+| 12 | Extensión a grupos abelianos | NOTA §7 | Esbozo detallado de demostración | Sucesiones equidistribuidas (p. ej. Følner) | **[PLAUSIBLE]** |
 | 13 | Rogers falla en grupos no cíclicos; el atajo $a = 0$ falla en $\mathbb{Z}^2$ | NOTA Ej. 7.2; `verificacion/checks.py` (bloque 3) | Verificación directa + numérico | $(\mathbb{Z}/2)^2$, $\mathbb{Z}^2$ | **[NUMÉRICO]** + cálculo a mano; coincide con [5] |
 
 ## 4. Limitaciones y vacíos
 
 - **Novedad limitada del resultado central.** La respuesta al problema ya era conocida [2, 5]. No pude leer directamente el hilo del foro ni la conversación original (el sitio bloquea el acceso automatizado; usé la captura aportada, un espejo parcial y fuentes secundarias). Según esas fuentes, T. Tao publicó una traducción combinatoria del argumento ergódico con la desigualdad maximal de Hardy–Littlewood, que puede solaparse con NOTA §4. La búsqueda bibliográfica (Crossref/FastTrack, Consensus, web) no puede garantizar exhaustividad.
-- **Partes sin verificación mecánica.** Las filas [PLAUSIBLE] de la tabla (9–12) tienen demostración escrita completa en `NOTA.md`, pero no están formalizadas.<!-- REVISION_README -->
+- **Partes sin verificación mecánica.** Las filas [PLAUSIBLE] de la tabla (9–12) tienen demostración escrita completa en `NOTA.md`, pero no están formalizadas (el Teorema 7.1 solo como esbozo detallado). Un revisor automático independiente las leyó línea por línea sin encontrar errores en teoremas ni demostraciones (NOTA §9); eso no equivale a una revisión por pares.
 - **Dependencia de literatura profunda.** La fila 11 usa que la densidad de los enteros con un divisor en $(T, 2T]$ tiende a $0$ [12, 13].
 - **Sin versión cuantitativa.** No se obtiene $k$ en función de $\varepsilon$; en general no puede existir sin información aritmética sobre la sucesión. Qué sucesiones cumplen la hipótesis equivale a caracterizar las *sucesiones de Behrend*, un problema clásico y difícil [9].
 - **Qué lo resolvería:** formalizar el valor exacto de la Proposición 4.2, la Proposición 5.3 (Davenport–Erdős) y el Teorema 7.1 (grupos); contrastar con el hilo original cuando sea accesible.
@@ -96,7 +96,7 @@ Las referencias con DOI se verificaron contra Crossref en esta sesión. La lista
 9. R. R. Hall, *Sets of Multiples*, Cambridge Univ. Press, 1996. [doi:10.1017/CBO9780511566011](https://doi.org/10.1017/CBO9780511566011)
 10. F. A. Behrend, Bull. Amer. Math. Soc. 54 (1948), 681–684. [doi:10.1090/S0002-9904-1948-09056-5](https://doi.org/10.1090/S0002-9904-1948-09056-5)
 11. A. S. Besicovitch, Math. Ann. 110 (1935), 336–341. [doi:10.1007/BF01448032](https://doi.org/10.1007/BF01448032)
-12. P. Erdős, *A generalization of a theorem of Besicovitch*, J. London Math. Soc. 11 (1936), 92–98. [doi:10.1112/jlms/s1-11.2.92](https://doi.org/10.1112/jlms/s1-11.2.92)
+12. P. Erdős, *Note on sequences of integers no one of which is divisible by any other*, J. London Math. Soc. 10 (1935), 126–128, [doi:10.1112/jlms/s1-10.1.126](https://doi.org/10.1112/jlms/s1-10.1.126); y *A generalization of a theorem of Besicovitch*, J. London Math. Soc. 11 (1936), 92–98, [doi:10.1112/jlms/s1-11.2.92](https://doi.org/10.1112/jlms/s1-11.2.92)
 13. K. Ford, Ann. of Math. 168 (2008), 367–433. [doi:10.4007/annals.2008.168.367](https://doi.org/10.4007/annals.2008.168.367)
 14. A. Dymek, S. Kasjan, J. Kułaga‑Przymus, M. Lemańczyk, Trans. Amer. Math. Soc. 370 (2018), 5425–5489. [doi:10.1090/tran/7132](https://doi.org/10.1090/tran/7132)
 15. S. Kasjan, G. Keller, M. Lemańczyk, Int. Math. Res. Not. 2019, 2690–2734. [doi:10.1093/imrn/rnx196](https://doi.org/10.1093/imrn/rnx196)
