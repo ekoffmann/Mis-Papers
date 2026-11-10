@@ -1,0 +1,18 @@
+# Control cruzado con la segunda implementación (hs_independiente.cpp), ejecutado por el revisor independiente.
+# UNSAT = no existe conjunto de corte de tamaño <= B.  Las decisiones grandes van partidas en 4 (J = 4).
+k=9 N=81 B=14 UNSAT nodes=318178653 t=146.9s
+k=10 N=100 B=15 UNSAT (partial) nodes=276334598 t=515.9s
+k=10 N=100 B=15 UNSAT (partial) nodes=279981366 t=520.6s
+k=10 N=100 B=15 UNSAT (partial) nodes=277887041 t=519.0s
+k=10 N=100 B=15 UNSAT (partial) nodes=275962499 t=515.6s
+k=11 N=121 B=16 UNSAT (partial) nodes=1361353188 t=1259.8s
+k=11 N=121 B=16 UNSAT (partial) nodes=1381790125 t=1275.2s
+k=11 N=121 B=16 UNSAT (partial) nodes=1433286639 t=1300.3s
+k=11 N=121 B=16 UNSAT (partial) nodes=1391138953 t=1290.4s
+# Comprobaciones pequeñas repetidas aquí:
+k=5 N=25 B=6 UNSAT nodes=424 t=0.0s
+k=5 N=25 B=7 SAT nodes=1567 t=0.0s H=3,7,9,10,11,16,21
+k=7 N=49 B=10 UNSAT nodes=335552 t=0.2s
+k=7 N=49 B=11 SAT nodes=143413 t=0.1s H=1,3,9,14,18,19,20,22,29,36,43
+k=8 N=64 B=12 UNSAT nodes=8383758 t=5.9s
+k=8 N=64 B=13 SAT nodes=5287474 t=3.8s H=1,5,12,19,26,30,32,33,34,42,47,52,57

@@ -2,7 +2,7 @@
 
 **Nota de investigación (sin revisión por pares), elaborada con asistencia de IA. Versión del 10‑11‑2026.**
 
-> **Advertencia.** El Problema 142 de Erdős **sigue abierto** y esta nota **no lo resuelve**. Contiene (i) una revisión del estado del arte con fuentes verificadas, (ii) tres observaciones sobre las formalizaciones públicas del problema y (iii) resultados elementales, verificados en Lean 4, en un régimen **distinto** del que pide el problema (progresiones largas, $N \le k^2$). Etiquetas: **[PROBADO]** = verificado en Lean 4 + Mathlib (compila, sin `sorry`, solo axiomas estándar); **[PLAUSIBLE]** = demostración escrita a mano, no formalizada; **[NUMÉRICO]** = comprobado por ordenador; **[CONJETURA]** = sin demostración.
+> **Advertencia.** El Problema 142 de Erdős **sigue abierto** y esta nota **no lo resuelve**. Contiene (i) una revisión del estado del arte con fuentes verificadas, (ii) tres observaciones sobre las formalizaciones públicas del problema y (iii) resultados elementales, la mayoría verificados en Lean 4, en un régimen **distinto** del que pide el problema (progresiones largas, $N \le k^2$). Ese régimen tiene bibliografía propia (Brown–Freedman 1989, Truss 1991, Xu 2013, Korsky 2026) que contiene versiones **más fuertes** de varios de esos resultados; se detalla en §4.0 y §7. Etiquetas: **[PROBADO]** = verificado en Lean 4 + Mathlib (compila, sin `sorry`, solo axiomas estándar); **[PLAUSIBLE]** = demostración escrita a mano, no formalizada; **[NUMÉRICO]** = comprobado por ordenador; **[CONJETURA]** = sin demostración.
 
 ## 0. Resumen
 
@@ -10,12 +10,12 @@ Sea $r_k(N)$ el mayor tamaño de un subconjunto de $\lbrace 1,\dots,N\rbrace$ si
 
 1. **Estado del arte (§2).** Ni siquiera se conoce el orden de magnitud de $r_3(N)$: las mejores cotas son $N\cdot 2^{-(C+o(1))\sqrt{\log_2 N}}$ por abajo y $N\exp(-c(\log N)^{1/6}/\log\log N)$ por arriba. Los exponentes de $\log N$ ($1/2$ frente a $1/6$) no coinciden, así que una fórmula asintótica está fuera del alcance de las técnicas actuales. Para $k\ge 4$ la distancia es mayor.
 2. **Formalizaciones (§3).** (A) El enunciado formal de `erdos_142` en `google-deepmind/formal-conjectures` es insatisfacible tal como está escrito (pide una sola función para todos los $k$) **[PROBADO]**. (B) Su variante `erdos_142.variants.lower` ($r_k(N)=o(N/\log N)$), marcada allí como abierta, se deduce del teorema cuantitativo formalizado por OpenAI **[PROBADO, condicional a ese teorema]**. (C) El enunciado Lean de ese teorema es más débil que el que anuncia el manuscrito.
-3. **Progresiones largas (§4).** Con $\tau_k(N)=N-r_k(N)$ y $q$ el menor factor primo de $k$:
+3. **Progresiones largas (§4).** Con $\tau_k(N)=N-r_k(N)$ y $q$ el menor factor primo de $k$ (los Teoremas C y D son versiones más débiles, verificadas formalmente, de resultados conocidos; véase §4.0):
    - **Teorema A [PROBADO]:** $r_k(N)=N-\lfloor N/k\rfloor$ para todo $N\le q(k-1)$.
-   - **Teorema B [PROBADO]:** el rango es óptimo: $r_k(q(k-1)+1)=N-\lfloor N/k\rfloor-1$.
+   - **Teorema B [PROBADO]:** la fórmula falla en el entero siguiente: para $N=q(k-1)+1$, $r_k(N)=N-\lfloor N/k\rfloor-1$.
    - **Teorema C [PROBADO]:** en $N=k^2$ hace falta un exceso de orden $\sqrt{k}$: si $\tau_k(k^2)=k+s$ entonces $k \lt 8s^2+8s+4$.
    - **Teorema D [PROBADO para $p\ge7$]:** $\tau_p(p^2)\le 2p-3$ para todo primo $p\ge 5$ (construcción explícita; el caso $p=5$ por cálculo exacto).
-4. **Cálculos exactos (§5) [NUMÉRICO].** $\tau_k(k^2)=3,4,6,7,9,11,13,15,16$ para $k=2,\dots,10$ y $17\le\tau_{11}(121)\le 18$. La conjetura natural $\tau_p(p^2)=2p-3$ (cierta para $p=5,7$) es **falsa** para $p=11,13,17,19,23$.
+4. **Cálculos exactos (§5) [NUMÉRICO].** $\tau_k(k^2)=3,4,6,7,9,11,13,15,16$ para $k=2,\dots,10$ y $17\le\tau_{11}(121)\le 18$. La igualdad $\tau_p(p^2)=2p-3$, cierta para $p=5,7$, ya falla en $p=11,13,17,19,23$ (para $p$ grande esto se sigue de los resultados de Xu y de Korsky).
 5. **Preguntas abiertas (§6)** y **qué es nuevo y qué no (§7)**.
 
 Nada de lo anterior aporta información sobre la asintótica con $k$ fijo.
@@ -96,11 +96,25 @@ def QuantitativeDensityBound (k : ℕ) : Prop :=
       (extremalNumber k N : ℝ) ≤ C * N * Real.exp (-c * (Real.log (Real.log N)) ^ (1 + η))
 ```
 
-es decir, $\exp(-c(\log\log N)^{1+\eta})$. Basta para el Problema 3 y para (B), pero no es la cota cuasipolinómica del título. Solo he leído los enunciados (`Model.lean`, `Results/Conclusions.lean`), no las demostraciones.
+es decir, $\exp(-c(\log\log N)^{1+\eta})$. Basta para el Problema 3 y para (B), pero no es la cota cuasipolinómica del título. La documentación de `openai/math` ya lo advierte en lo esencial (`lean/docs/159.md`: el teorema seleccionado es la consecuencia sobre sumas de recíprocos, y la cota cuantitativa del artículo «is outside this statement»); aquí solo se precisa qué cota aparece en la proposición interna. Solo he leído los enunciados (`Model.lean`, `Results/Conclusions.lean`), no las demostraciones.
 
 ## 4. Progresiones largas: el régimen $N\le k^2$
 
 Cuando $k$ crece con $N$ el problema cambia de naturaleza: $r_k(N)$ está muy cerca de $N$ y lo interesante es el complemento $\tau_k(N)$. Archivos Lean: [`Exact.lean`](lean/Erdos142/Exact.lean), [`Threshold.lean`](lean/Erdos142/Threshold.lean), [`Sqrt.lean`](lean/Erdos142/Sqrt.lean), [`Construccion.lean`](lean/Erdos142/Construccion.lean).
+
+### 4.0. Antecedentes: lo que ya se sabía
+
+Este régimen lo introdujeron Brown y Freedman [22], que definieron $f(N,k)=\tau_k(N)$. Resultados previos (los de [22], [23] y [24] se citan tal como los resume la introducción de [25], que sí he leído; no he podido consultar esos tres artículos):
+
+| Resultado | Fuente |
+|---|---|
+| $\tau_k(N)\ll_\varepsilon N^{1-\varepsilon}$ para $k=N^{\varepsilon}$; $\tau_p(p^2)\le 2p-2$ para $p$ primo impar | Brown–Freedman 1989 [22] |
+| $n+\tfrac12\sqrt n-2\lt\tau_n(n^2)\le q+\lceil (n-1)^2/q\rceil$, con $q$ el mayor primo $\le n$ | Truss 1991 [23] |
+| Mejores cotas inferiores para $r_p(p^2)$: ahorro de orden logarítmico bajo $2p$ | Xu 2013 [24] |
+| $\tau_n(n^2)\ge n+n^{1-\varepsilon}$ para $n\ge n_0(\varepsilon)$; $\tau_p(p^2)\le 2p-(\sqrt2-o(1))\sqrt{p/\log p}$; $\tau_k(N)\sim N/k$ si $k=\lfloor N^{\alpha}\rfloor$ con $1/2\lt\alpha\lt1$; conjetura $\tau_n(n^2)=(2-o(1))n$ | Korsky 2026 [25] (prepublicación) |
+| Valores exactos de $r_k(n)$ para $k$ y $n$ pequeños | Shao–Deng–Liang–Xu 2012 [26]; Ahmed–Dybizbański–Snevily 2013 [1]; OEIS |
+
+**Localicé estos trabajos solo al final, gracias a una revisión independiente de esta nota.** A su luz, lo que sigue debe leerse así: el argumento del Teorema A y el Corolario A.1 son conocidos; el Teorema C es una versión más débil del de Truss; el Teorema D mejora en una unidad la cota de Brown–Freedman y es más débil que las de Xu y Korsky; la pregunta central de §6 es de Korsky. Se mantienen porque son elementales, están verificados formalmente y sirven de base a los cálculos de §5.
 
 ### 4.1. Dos lemas básicos
 
@@ -112,7 +126,7 @@ Cuando $k$ crece con $N$ el problema cambia de naturaleza: $r_k(N)$ está muy ce
 
 *Demostración.* En un intervalo de longitud $kd$ cada clase módulo $d$ tiene exactamente $k$ elementos, que forman una PA de $k$ términos y diferencia $d$. Recíprocamente, la PA $a,a+d,\dots,a+(k-1)d$ está contenida en algún intervalo de longitud $kd$ dentro de $[1,N]$ (porque $kd\le N$) y es la clase de $a$ en ese intervalo. $\square$
 
-Así, cortar todas las PA equivale a que $H$ sea «completo módulo $d$» en cada ventana de longitud $kd$, para cada $d$. Para $d=1$ es la condición de bloques; la dificultad está en satisfacer todas las $d$ a la vez.
+Así, cortar todas las PA de diferencia $d\le N/k$ equivale a que $H$ sea «completo módulo $d$» en cada ventana de longitud $kd$. Las diferencias con $(k-1)d\lt N\lt kd$ (por ejemplo $d=k+1$ cuando $N=k^2$) también tienen progresiones pero no ventanas, y se tratan aparte. Para $d=1$ es la condición de bloques; la dificultad está en satisfacer todas las $d$ a la vez.
 
 ### 4.2. Fórmula exacta y optimalidad de su rango
 
@@ -122,7 +136,7 @@ Así, cortar todas las PA equivale a que $H$ sea «completo módulo $d$» en cad
 r_k(N)=N-\lfloor N/k\rfloor .
 ```
 
-Más en general, si $p\le k$ es primo y $N\le p(k-1)$, entonces $N-\lfloor N/p\rfloor\le r_k(N)\le N-\lfloor N/k\rfloor$.
+Además, si $p\le k$ es primo y $N\le p(k-1)$, entonces $N-\lfloor N/p\rfloor\le r_k(N)\le N-\lfloor N/k\rfloor$.
 
 *Demostración.* La cota superior es el Lema 1. Para la inferior basta ver que los múltiplos de $m$ (con $m=k$ o $m=p$) cortan toda PA de $k$ términos de $[1,N]$. Una tal PA tiene diferencia $d\le (N-1)/(k-1)$, luego $d\lt q$ (resp. $d\lt p$) y $\gcd(d,m)=1$: todo factor primo de $k$ es $\ge q\gt d$ (resp. $p$ es primo y $p\gt d$). Entonces los $m\le k$ primeros términos $a,a+d,\dots,a+(m-1)d$ recorren todas las clases módulo $m$; uno de ellos es múltiplo de $m$. $\square$
 
@@ -134,15 +148,15 @@ En particular, para $p$ primo, $r_p(N)=N-\lfloor N/p\rfloor$ para todo $N\le p(p
 \Big\lfloor \frac{N}{k}\Big\rfloor \le N-r_k(N)\le \frac{N}{k-k^{0{,}525}} ,
 ```
 
-de modo que $N-r_k(N)=(1+O(k^{-0{,}475}))N/k+O(1)$. En este rango ($k$ algo mayor que $\sqrt N$) sí hay, pues, una fórmula asintótica para el complemento.
+de modo que $N-r_k(N)=(1+O(k^{-0{,}475}))N/k+O(1)$. En este rango ($k$ algo mayor que $\sqrt N$) sí hay, pues, una fórmula asintótica para el complemento siempre que $N/k\to\infty$. La observación es conocida: Korsky [25] la enuncia para $k=\lfloor N^{\alpha}\rfloor$ con $1/2\lt\alpha\lt1$, con el mismo argumento del mayor primo $\le k$.
 
 **Corolario A.2 (caso $t=1$ de una conjetura de Ahmed–Dybizbański–Snevily).** Para $p$ primo y $1\le i\le p-1$ se tiene $r_p(ip-1)=i(p-1)$ **[PROBADO: `r_prime_mul_sub_one`]**, y el conjunto extremal es único: $[1,ip-1]$ menos los múltiplos de $p$ **[PLAUSIBLE + NUMÉRICO]**.
 
 *Demostración.* El valor es el Teorema A con $N=ip-1\le p(p-1)$. Unicidad: un conjunto de corte $H$ de tamaño $i-1$ tiene exactamente un elemento en cada bloque $[(j-1)p+1,jp]$ y exactamente uno en cada bloque $[jp,(j+1)p-1]$, $1\le j\le i-1$; el $j$-ésimo elemento está en ambos, cuya intersección es $\lbrace jp\rbrace$. $\square$
 
-Es el caso $t=1$ de la «conjetura de unicidad» de [1] (que generaliza la conjetura de Szekeres), cuya tabla de valores exactos para $k=11$ ($n\le109$) queda explicada íntegramente por el Teorema A. Los casos $t\ge2$ de esa conjetura no se tocan aquí.
+Es el caso $t=1$ de la «conjetura de unicidad» de [1] (que generaliza la conjetura de Szekeres): $r_p\big(((ip-i-1)p^t+1)/(p-1)\big)=i(p-1)^t$, que para $t=1$ es $r_p(ip-1)=i(p-1)$. La tabla de valores exactos de [1] para $k=11$ ($n\le109$) queda explicada íntegramente por el Teorema A. Los casos $t\ge2$ no se tocan aquí; para $t$ grande la conjetura no puede ser cierta, igual que la de Szekeres, porque $r_p(n)\ge r_3(n)\ge n^{1-o(1)}$ (Behrend [3]) mientras que $i(p-1)^t$ es del orden de $n^{\log(p-1)/\log p}$.
 
-**Teorema B (el rango es óptimo) [PROBADO: `r_first_fail`].** Para todo $k\ge2$, con $q$ su menor factor primo y $N=q(k-1)+1$,
+**Teorema B (la fórmula falla en el entero siguiente) [PROBADO: `r_first_fail`].** Para todo $k\ge2$, con $q$ su menor factor primo y $N=q(k-1)+1$,
 
 ```math
 r_k(N)=q(k-2)+1=N-\lfloor N/k\rfloor-1 .
@@ -150,7 +164,7 @@ r_k(N)=q(k-2)+1=N-\lfloor N/k\rfloor-1 .
 
 *Demostración.* $\tau_k(N)\le\tau_k(N-1)+1=q$ por el Teorema A. Supongamos que $H$ corta todo y $\lvert H\rvert\le q-1$. Para cada $x\in H$, los bloques de $k$ enteros consecutivos a la izquierda y a la derecha de $x$ dan $\lfloor (x-1)/k\rfloor+1+\lfloor (N-x)/k\rfloor\le \lvert H\rvert\le q-1$ (`card_ge_of_mem`). Escribiendo $x=jk+u$ con $1\le u\le k$, si fuera $u\le k-q+1$ se tendría $N-x\ge (q-1-j)k$ y la suma sería $\ge q$. Luego $u\ge k-q+2$, y como $q$ divide a $k$, $x\equiv u\pmod q$ con $u\in[k-q+2,k]$, cuyos restos módulo $q$ son $2,3,\dots,q-1,0$: nunca $1$. Pero la PA $1,1+q,\dots,1+(k-1)q=N$ está en $[1,N]$ y todos sus términos son $\equiv1\pmod q$: $H$ no la corta. $\square$
 
-Para $k=p$ primo: $r_p(p(p-1)+1)=(p-1)^2$ (`r_prime_succ_range`).
+Para $k=p$ primo: $r_p(p(p-1)+1)=(p-1)^2$ (`r_prime_succ_range`). Así, $q(k-1)$ es el mayor $M$ tal que la fórmula vale para **todo** $N\le M$. Para $k$ compuesto la fórmula puede volver a cumplirse más adelante en valores aislados (por ejemplo $k=4$ en $N=8,9,10$).
 
 ### 4.3. Cota inferior en $N=k^2$
 
@@ -186,13 +200,15 @@ es decir $(s+1)k+1\le (s+1)(8s^2+8s+4)$, que da $k\lt 8s^2+8s+4$. Si no es posit
 
 (La prueba formal evita ordenar $H$: cubre $[1,k^2]$ con las «fibras» de cada $h\in H$, que tienen a lo sumo $k$ elementos, y a lo sumo $k-t$ salvo para pocos $h$.)
 
-**Versión afinada [PLAUSIBLE + NUMÉRICO].** Los pasos (a) y (b) dan más: si $D(k,s)$ es la menor suma posible de $k+s-1$ enteros $\ge0$ en la que el valor $j$ aparece a lo sumo $s+j$ veces, entonces $D(k,s)\le k(s+1)-1$. Llamando $s_{\min}(k)$ al menor $s$ que lo cumple, $\tau_k(k^2)\ge k+s_{\min}(k)$. Numéricamente $s_{\min}(k)/\sqrt k\to c_0\approx0{,}556$ (véase `checks.py`); por ejemplo $s_{\min}(k)=1$ para $3\le k\le9$, $2$ para $10\le k\le22$ y $3$ para $k=23$.
+**Versión afinada [PLAUSIBLE + NUMÉRICO].** Los pasos (a) y (b) dan más. Sea $D(k,s)$ la menor suma posible de $k+s-1$ enteros $\ge0$ en la que el valor $j$ aparece a lo sumo $s+j$ veces. Si existe un conjunto de corte de tamaño $k+s$, entonces $D(k,s)\le k(s+1)-1$. Llamando $s_{\min}(k)$ al menor $s$ que cumple esta desigualdad, $\tau_k(k^2)\ge k+s_{\min}(k)$. Se tiene $s_{\min}(k)/\sqrt k\to c_0=(4-2\sqrt3)/\sqrt{4\sqrt3-6}\approx0{,}556$ (comprobado numéricamente en `checks.py`); por ejemplo $s_{\min}(k)=1$ para $3\le k\le9$, $2$ para $10\le k\le22$ y $3$ para $k=23$.
+
+**Comparación con lo conocido.** Truss [23] demostró ya en 1991 que $\tau_n(n^2)\gt n+\tfrac12\sqrt n-2$: el exceso de orden $\sqrt n$ **no es nuevo**, y la forma cerrada del Teorema C (constante $\approx0{,}354$) es más débil que la suya. La versión afinada tiene una constante algo mayor ($0{,}556$ frente a $0{,}5$) y da cotas explícitas para $n$ pequeño, pero ambas quedan muy superadas asintóticamente por Korsky [25]: $\tau_n(n^2)\ge n+n^{1-\varepsilon}$ para todo $\varepsilon\gt0$ y $n\ge n_0(\varepsilon)$. Lo que aporta esta sección es una demostración elemental verificada formalmente.
 
 **Consecuencia para $N$ grande.** Del Teorema C se sigue $\tau_k(k^2)\ge k+\sqrt k/5$ para todo $k\ge4$ (para $4\le k\le19$ da $s\ge1$; para $k\ge20$, $\tfrac12(\sqrt{(k-2)/2}-1)\ge\sqrt k/5$). Como $r_k$ es subaditiva, $\tau_k$ es superaditiva y $\tau_k(N)\ge\lfloor N/k^2\rfloor\,\tau_k(k^2)$: para $N$ múltiplo de $k^2$, $r_k(N)\le N-\big(1+\tfrac{1}{5\sqrt k}\big)N/k$. Con los valores exactos de §5, $r_5(N)\le \tfrac{18}{25}N$ y $r_7(N)\le\tfrac{38}{49}N$ para $N$ múltiplo de $25$ y de $49$.
 
 ### 4.4. Cota superior en $N=p^2$
 
-La construcción clásica de dígitos da $r_p(p^m)\ge(p-1)^m$ para $p$ primo: los enteros de $[0,p^m)$ sin el dígito $p-1$ en base $p$ no contienen PAs de $p$ términos (si $p^e$ es la mayor potencia de $p$ que divide a $d$, el dígito de posición $e$ de $a+id$ recorre todos los valores módulo $p$ cuando $i=0,\dots,p-1$). Es la observación de Erdős–Turán [8] para $p=3$ y el origen de la conjetura de Szekeres (véase [1]). En $N=p^2$ da $\tau_p(p^2)\le 2p-1$.
+La construcción clásica de dígitos da $r_p(p^m)\ge(p-1)^m$ para $p$ primo: los enteros de $[0,p^m)$ sin el dígito $p-1$ en base $p$ no contienen PAs de $p$ términos (si $p^e$ es la mayor potencia de $p$ que divide a $d$, el dígito de posición $e$ de $a+id$ recorre todos los valores módulo $p$ cuando $i=0,\dots,p-1$). Es la observación de Erdős–Turán [8] para $p=3$ y el origen de la conjetura de Szekeres (véase [1]). En $N=p^2$ da $\tau_p(p^2)\le 2p-1$, que es también lo que da la cota superior de Truss [23] en un primo. Según la introducción de [25], Brown–Freedman [22] obtuvieron $\tau_p(p^2)\le2p-2$, Xu [24] ahorros de orden logarítmico bajo $2p$, y Korsky [25] demuestra $\tau_p(p^2)\le 2p-(\sqrt2-o(1))\sqrt{p/\log p}$. El teorema siguiente ($2p-3$) mejora en una unidad la cota de Brown–Freedman y es **más débil** que las de Xu y Korsky para $p$ grande; su interés es que el conjunto es explícito, vale para todo primo $p\ge7$ y está verificado formalmente.
 
 **Teorema D [PROBADO: `Hset_hits`, `r_prime_sq_ge`].** Sea $p\ge7$ primo, $W=[2p+3,3p-2]$ y
 
@@ -200,7 +216,7 @@ La construcción clásica de dígitos da $r_p(p^m)\ge(p-1)^m$ para $p$ primo: lo
 H_p=\{2,\ p+1,\ 2p-1\}\ \cup\ W\ \cup\ \{jp : 3\le j\le p\}.
 ```
 
-Entonces $H_p$ corta todas las PA de $p$ términos de $[1,p^2]$ y $\lvert H_p\rvert=2p-3$. Por tanto $r_p(p^2)\ge(p-1)^2+2$. Para $p=5$ también $\tau_5(25)=7=2p-3$, con el conjunto $\lbrace5,10,15,16,17,19,23\rbrace$ **[NUMÉRICO]**.
+Entonces $H_p$ corta todas las PA de $p$ términos de $[1,p^2]$ y $\lvert H_p\rvert=2p-3$ (en Lean se demuestra $\lvert H_p\rvert\le2p-3$, que es lo que hace falta). Por tanto $r_p(p^2)\ge(p-1)^2+2$. Para $p=5$ también $\tau_5(25)=7=2p-3$, con el conjunto $\lbrace5,10,15,16,17,19,23\rbrace$ **[NUMÉRICO]**.
 
 *Demostración.* Sea $P=\lbrace a+id:0\le i\le p-1\rbrace\subseteq[1,p^2]$. Entonces $(p-1)d\le p^2-1$, luego $d\le p+1$.
 
@@ -216,7 +232,7 @@ Entonces $H_p$ corta todas las PA de $p$ términos de $[1,p^2]$ y $\lvert H_p\rv
 
 Los tres bloques de $H_p$ son disjuntos y suman $3+(p-4)+(p-2)=2p-3$. $\square$
 
-La demostración anterior es la que sigue la formalización Lean (lemas `hits_succ`, `hits_self`, `hits_two`, `hits_one`). Comprobación adicional por fuerza bruta: `check_Hp.cpp` verifica que $H_p$ corta todas las PA para los 92 primos $7\le p\le499$ (y `checks.py`, de forma independiente, para $p\le61$); la fórmula falla para $p=5$, y por eso el teorema pide $p\ge7$.
+La formalización Lean sigue esta demostración (lemas `hits_succ`, `hits_self`, `hits_two`, `hits_one`), con una división de casos ligeramente distinta en $m=2$, $d=2$. Comprobación adicional por fuerza bruta: `check_Hp.cpp` verifica que $H_p$ corta todas las PA para los 92 primos $7\le p\le499$ (y `checks.py`, de forma independiente, para $p\le61$); la fórmula falla para $p=5$, y por eso el teorema pide $p\ge7$.
 
 ## 5. Cálculos exactos en $N=k^2$
 
@@ -242,7 +258,7 @@ Herramientas (carpeta [`verificacion/`](verificacion/)): un buscador exhaustivo 
 
 Equivalentemente: $r_8(64)=51$, $r_9(81)=66$, $r_{10}(100)=84$ y $103\le r_{11}(121)\le104$.
 
-**La conjetura $\tau_p(p^2)=2p-3$ es falsa.** Los datos de $k=5,\dots,9$ y el Teorema D sugieren $\tau_p(p^2)=2p-3$. No es así: el conjunto
+**La igualdad $\tau_p(p^2)=2p-3$ no se mantiene.** Los datos de $k=5,\dots,9$ y el Teorema D podrían sugerir $\tau_p(p^2)=2p-3$ para $p\ge5$ (yo mismo lo conjeturé durante el trabajo). No es así, y para $p$ grande ya se sabía por [24] y [25]. Los cálculos muestran que falla desde $p=11$: el conjunto
 
 ```math
 \{6,10,15,26,37,44,48,53,59,67,70,79,81,92,93,96,106,113\}
@@ -250,7 +266,7 @@ Equivalentemente: $r_8(64)=51$, $r_9(81)=66$, $r_{10}(100)=84$ y $103\le r_{11}(
 
 tiene 18 elementos y corta todas las PA de 11 términos de $[1,121]$ (y $2\cdot11-3=19$). Su estructura: la clase $4$ módulo $11$ en las filas centrales ($15,26,\dots,92$) y un elemento de cada una de las otras diez clases repartidos de modo que suplen a los términos que faltan de esa columna en los extremos. Para $p=13$ hay un conjunto de $21\lt23$ elementos formado, salvo cinco puntos, por dos PA de diferencias $11$ y $13$ que se cruzan en $106$. Los conjuntos están en [`verificacion/datos/mejores_conjuntos.txt`](verificacion/datos/mejores_conjuntos.txt).
 
-**Lo que se sabe de $\tau_{11}(121)$.** La búsqueda exhaustiva descarta todo conjunto de 16 elementos ($8{,}5\cdot10^9$ nodos), luego $\tau_{11}(121)\ge17$. El recocido encuentra 18 en un segundo y no encuentra 17 en quince minutos ($3\cdot10^9$ iteraciones), lo que sugiere, sin demostrarlo, que el valor es 18.
+**Lo que se sabe de $\tau_{11}(121)$.** La búsqueda exhaustiva descarta todo conjunto de 16 elementos ($8{,}5\cdot10^9$ nodos), luego $\tau_{11}(121)\ge17$. Una segunda implementación independiente, con otro algoritmo (`hs_independiente.cpp`, escrita por el revisor de esta nota), llega a la misma conclusión ($5{,}6\cdot10^9$ nodos) y confirma también $\tau_9(81)=15$ y $\tau_{10}(100)=16$. El recocido encuentra 18 en un segundo y no encuentra 17 en quince minutos ($3\cdot10^9$ iteraciones), lo que sugiere, sin demostrarlo, que el valor es 18.
 
 **Cerca del umbral.** Los valores exactos justo por encima de $p(p-1)$ muestran que cada entero adicional cuesta al principio un elemento entero más:
 
@@ -263,17 +279,22 @@ tiene 18 elementos y corta todas las PA de 11 términos de $[1,121]$ (y $2\cdot1
 ## 6. Preguntas abiertas
 
 1. **El Problema 142** propiamente dicho: fórmula asintótica (o al menos orden de magnitud) de $r_k(N)$ con $k$ fijo. Sigue abierto para todo $k\ge3$.
-2. **[Pregunta]** ¿Cuánto vale $\lim \tau_p(p^2)/p$? Se sabe $p+0{,}55\sqrt p\lesssim\tau_p(p^2)\le 2p-3$. Los datos ($2k-\tau_k(k^2)=1,2,2,3,3,3,3,3,4$ para $k=2,\dots,10$) son compatibles con $\tau_k(k^2)=2k-o(k)$, es decir, con que la construcción de dígitos sea asintóticamente óptima en $N=k^2$, pero no lo demuestran. **[CONJETURA]** $\tau_k(k^2)\ge(1+c)k$ para alguna constante $c\gt0$.
+2. **[Abierto, planteado por Korsky [25]]** ¿Es $\tau_n(n^2)\ge(1+\eta)n$ para algún $\eta\gt0$ fijo y todo $n$ grande? Se sabe $n+n^{1-o(1)}\le\tau_n(n^2)$ [25] y, para primos, $\tau_p(p^2)\le2p-(\sqrt2-o(1))\sqrt{p/\log p}$ [25]. **[CONJETURA, de Korsky]** $\tau_n(n^2)=(2-o(1))n$. Los datos de §5 ($2k-\tau_k(k^2)=1,2,2,3,3,3,3,3,4$ para $k=2,\dots,10$) son compatibles con ella, sin demostrar nada.
 3. **[Pregunta]** ¿$\tau_{11}(121)$ es 17 o 18?
 4. **[Pregunta]** ¿Es $\tau_p(p(p-1)+j)=p-1+j$ para $0\le j\le j_0(p)$ con $j_0(p)\to\infty$? (El caso $j=1$ es el Teorema B.)
 
 ## 7. Qué es nuevo y qué no
 
 - **§2** es una revisión; todos los resultados son de los autores citados.
-- **(A), (B), (C)** son observaciones sobre textos formales públicos. No he encontrado que estén señaladas, pero no he revisado las incidencias ni las solicitudes de cambio de esos repositorios. No son progreso matemático.
-- **Teorema A.** Es elemental y casi con seguridad folclore. Una página de seguimiento de estos problemas con IA [21] menciona que otros modelos «encontraron y demostraron una fórmula exacta para $r_k(N)$ con $N$ acotado en términos de $k$» (sin enunciarla); puede ser esta misma. En la literatura que pude consultar, [1] da la desigualdad general más débil $r(k,n)\le n-\lfloor m/2\rfloor$ y tablas exactas compatibles. No lo reclamo como nuevo; sí es nueva su verificación formal aquí.
-- **Teoremas B, C, D, Corolario A.2 y los valores de §5 para $k=10,11$.** No los he encontrado en [1] ni en las entradas de OEIS A003002–A003005, pero la búsqueda fue limitada (no pude consultar, por ejemplo, las tablas de Shao–Deng–Liang–Xu citadas en OEIS). Son elementales y pueden ser conocidos. Los valores exactos para $k\le7$ coinciden con las tablas de [1] y de OEIS.
-- Una conjetura que formulé durante el trabajo ($\tau_p(p^2)=2p-3$) quedó **refutada** por mis propios cálculos; se deja constancia en §5.
+- **(A) y (B)** son observaciones sobre textos formales públicos. No he encontrado que estén señaladas, pero no he revisado las incidencias ni las solicitudes de cambio de esos repositorios. **(C)** ya está advertida en lo esencial por la documentación de `openai/math`. Ninguna es progreso matemático.
+- **El régimen de progresiones largas tiene bibliografía previa (§4.0) que no localicé hasta la revisión final.** En consecuencia:
+  - **Teorema A y Corolario A.1.** El argumento (suprimir una clase módulo un primo mayor que todas las diferencias) es el de Truss [23] y Korsky [25]; es conocido. Una página de seguimiento de estos problemas con IA [21] menciona además que otros modelos «encontraron y demostraron una fórmula exacta para $r_k(N)$ con $N$ acotado en términos de $k$» (sin enunciarla). En [1] aparece la desigualdad general más débil $r(k,n)\le n-\lfloor m/2\rfloor$ con $m=\lfloor n/(k-1)\rfloor$. La formulación con el menor factor primo de $k$ y el Teorema B no los he visto enunciados, pero son inmediatos.
+  - **Teorema C.** Más débil que el de Truss (1991) en su forma cerrada y muy inferior al de Korsky (2026).
+  - **Teorema D.** Una unidad mejor que la cota de Brown–Freedman (1989); más débil que las de Xu (2013) y Korsky (2026) para $p$ grande.
+  - **Valores de §5.** Los de $k\le7$ coinciden con las tablas de [1] y de OEIS; los de $k=8$ pueden estar en [26], que no pude consultar; los de $k=9,10$ y las cotas para $k=11$ no los he encontrado en las fuentes que sí pude leer.
+  - **La pregunta y la conjetura de §6.2** son de Korsky.
+- **Lo que sí puede considerarse aportación de esta nota:** las verificaciones formales en Lean de estos enunciados (no conozco otras), el buscador exhaustivo con sus datos y controles, la unicidad del Corolario A.2 y las observaciones (A) y (B).
+- Una conjetura que formulé durante el trabajo ($\tau_p(p^2)=2p-3$) quedó **refutada** por mis propios cálculos (y, para $p$ grande, ya lo estaba por [24] y [25]); se deja constancia en §5.
 
 ## 8. Reproducibilidad
 
@@ -304,6 +325,10 @@ g++ -O2 -o check_Hp check_Hp.cpp
 ```
 
 ```bash
+g++ -O2 -o hs_independiente hs_independiente.cpp
+```
+
+```bash
 python3 checks.py
 ```
 
@@ -315,9 +340,12 @@ python3 test_dfs.py
 - `check_Hp.cpp`: comprueba el Teorema D por fuerza bruta para todos los primos hasta el límite dado (`./check_Hp 499`).
 - `test_dfs.py`: compara `tau_dfs` con la búsqueda de `checks.py` en 1160 casos pequeños, con y sin podas; cero discrepancias.
 - `tau_dfs k N B` decide si existe un conjunto de corte de tamaño $\le B$. Las podas son condiciones necesarias (explicadas en la cabecera del archivo); como control, $(k,N,B)=(11,121,15)$ da «no existe» tanto con todas las podas ($3{,}9\cdot10^8$ nodos) como sin las podas de simetría y de ventanas ($1{,}1\cdot10^9$ nodos). Registros en [`verificacion/datos/exhaustivo.txt`](verificacion/datos/exhaustivo.txt).
+- `hs_independiente.cpp`: segunda implementación exacta, independiente de `tau_dfs` (ramificación sobre la progresión más restringida y cota por empaquetamiento); la escribió el revisor independiente. Reproduce las decisiones «no existe» para $(k,N,B)=(9,81,14)$, $(10,100,15)$ y $(11,121,16)$. Registros en [`verificacion/datos/independiente.txt`](verificacion/datos/independiente.txt).
 - `sa k N B segundos semilla` busca un conjunto de tamaño $B$; solo puede demostrar existencia. Registros en [`verificacion/datos/recocido.txt`](verificacion/datos/recocido.txt).
 
-**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en una búsqueda exhaustiva por ordenador no formalizada (validada como se indica). El Corolario A.1, la unicidad del Corolario A.2, el Lema 2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva.
+**Revisión.** Una revisión adversarial independiente (otro agente de IA, sin acceso a mis razonamientos) repasó las demostraciones caso por caso, comprobó que cada enunciado Lean dice lo que afirma la nota y reprodujo los cálculos con programas propios. No encontró errores en los teoremas; señaló una frase falsa (ya corregida, tras el Lema 2), varias imprecisiones de redacción y, sobre todo, la bibliografía previa de §4.0.
+
+**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en búsquedas exhaustivas por ordenador no formalizadas (dos implementaciones independientes coinciden). El Corolario A.1, la unicidad del Corolario A.2, el Lema 2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva: los trabajos [22]–[26] se localizaron al final, y [22], [23], [24] y [26] no se han leído directamente (se citan según la introducción de [25] y sus registros en Crossref).
 
 ## Referencias
 
@@ -344,3 +372,8 @@ Todas verificadas (Crossref para los DOI; página de arXiv para las prepublicaci
 19. E. Szemerédi, *On sets of integers containing no $k$ elements in arithmetic progression*, Acta Arith. 27 (1975), 199–245. <https://doi.org/10.4064/aa-27-1-199-245>
 20. Base de datos de problemas de Erdős, <https://github.com/teorth/erdosproblems> (entrada 142: abierto, 10 000 USD), y enunciado formal en <https://github.com/google-deepmind/formal-conjectures> (commit `1c24583`).
 21. *Erdős Problem a Day*, entrada sobre el problema 142, <https://erdosproblemaday.com/day/142-white-whale> (consultada el 10‑11‑2026).
+22. T. C. Brown, A. R. Freedman, *Small sets which meet all the $k(n)$-term arithmetic progressions in the interval $[1,n]$*, J. Combin. Theory Ser. A 51 (1989), 244–249. <https://doi.org/10.1016/0097-3165(89)90049-6>
+23. J. K. Truss, *Small sets which meet all the $n$-term arithmetic progressions in the interval $[1,n^2]$*, Bull. London Math. Soc. 23 (1991), 123–127. <https://doi.org/10.1112/blms/23.2.123>
+24. X. Xu, *A generalization of sets without long arithmetic progressions based on Szekeres algorithm*, J. Number Theory 133 (2013), 3670–3677. <https://doi.org/10.1016/j.jnt.2013.05.008>
+25. S. Korsky, *Hitting arithmetic progressions at the square-root scale*, arXiv:2606.01780 (v2, 8‑10‑2026). <https://arxiv.org/abs/2606.01780>
+26. Z. Shao, F. Deng, M. Liang, X. Xu, *On sets without $k$-term arithmetic progression*, J. Comput. System Sci. 78 (2012), 610–618. <https://doi.org/10.1016/j.jcss.2011.09.003>
