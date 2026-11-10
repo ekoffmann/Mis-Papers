@@ -3,5 +3,6 @@ import Erdos142.Ventanas
 import Erdos142.Threshold
 import Erdos142.Sqrt
 import Erdos142.Construccion
+import Erdos142.Tres
 import Erdos142.FormalConjectures
 import Erdos142.Resumen

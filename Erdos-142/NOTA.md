@@ -2,14 +2,14 @@
 
 **Nota de investigación (sin revisión por pares), elaborada con asistencia de IA. Versión del 10‑11‑2026.**
 
-> **Advertencia.** El Problema 142 de Erdős **sigue abierto** y esta nota **no lo resuelve**. Contiene (i) una revisión del estado del arte con fuentes verificadas, (ii) tres observaciones sobre las formalizaciones públicas del problema y (iii) resultados elementales, la mayoría verificados en Lean 4, en un régimen **distinto** del que pide el problema (progresiones largas, $N \le k^2$). Ese régimen tiene bibliografía propia (Brown–Freedman 1989, Truss 1991, Xu 2013, Korsky 2026) que contiene versiones **más fuertes** de varios de esos resultados; se detalla en §4.0 y §7. Etiquetas: **[PROBADO]** = verificado en Lean 4 + Mathlib (compila, sin `sorry`, solo axiomas estándar); **[PLAUSIBLE]** = demostración escrita a mano, no formalizada; **[NUMÉRICO]** = comprobado por ordenador; **[CONJETURA]** = sin demostración.
+> **Advertencia.** El Problema 142 de Erdős **sigue abierto** y esta nota **no lo resuelve**. Contiene (i) una revisión del estado del arte con fuentes verificadas, (ii) cuatro observaciones sobre las formalizaciones públicas del problema y (iii) resultados elementales, la mayoría verificados en Lean 4, en un régimen **distinto** del que pide el problema (progresiones largas, $N \le k^2$). Ese régimen tiene bibliografía propia (Brown–Freedman 1989, Truss 1991, Xu 2013, Korsky 2026) que contiene versiones **más fuertes** de varios de esos resultados; se detalla en §4.0 y §7. Etiquetas: **[PROBADO]** = verificado en Lean 4 + Mathlib (compila, sin `sorry`, solo axiomas estándar); **[PLAUSIBLE]** = demostración escrita a mano, no formalizada; **[NUMÉRICO]** = comprobado por ordenador; **[CONJETURA]** = sin demostración.
 
 ## 0. Resumen
 
 Sea $r_k(N)$ el mayor tamaño de un subconjunto de $\lbrace 1,\dots,N\rbrace$ sin progresión aritmética (PA) no trivial de $k$ términos. Erdős pidió (10 000 USD) una **fórmula asintótica** para $r_k(N)$ con $k$ fijo y $N\to\infty$.
 
 1. **Estado del arte (§2).** Ni siquiera se conoce el orden de magnitud de $r_3(N)$: las mejores cotas son $N\cdot 2^{-(C+o(1))\sqrt{\log_2 N}}$ por abajo y $N\exp(-c(\log N)^{1/6}/\log\log N)$ por arriba. Los exponentes de $\log N$ ($1/2$ frente a $1/6$) no coinciden, así que una fórmula asintótica está fuera del alcance de las técnicas actuales. Para $k\ge 4$ la distancia es mayor.
-2. **Formalizaciones (§3).** (A) El enunciado formal de `erdos_142` en `google-deepmind/formal-conjectures` es insatisfacible tal como está escrito (pide una sola función para todos los $k$) **[PROBADO]**. (B) Su variante `erdos_142.variants.lower` ($r_k(N)=o(N/\log N)$), marcada allí como abierta, se deduce del teorema cuantitativo formalizado por OpenAI **[PROBADO, condicional a ese teorema]**. (C) El enunciado Lean de ese teorema es más débil que el que anuncia el manuscrito.
+2. **Formalizaciones (§3).** (A) El enunciado formal de `erdos_142` en `google-deepmind/formal-conjectures` es insatisfacible tal como está escrito (pide una sola función para todos los $k$) **[PROBADO]**. (B) Su variante `erdos_142.variants.lower` ($r_k(N)=o(N/\log N)$), marcada allí como abierta, se deduce del teorema cuantitativo formalizado por OpenAI **[PROBADO, condicional a ese teorema]**. (C) El enunciado Lean de ese teorema es más débil que el que anuncia el manuscrito. (D) Para $k=3$, lo certificado formalmente es $Ne^{-4\sqrt{\log N}}\le r_3(N)=o(N)$ (teoremas de Mathlib, trasladados aquí a la definición del enunciado formal) **[PROBADO]**.
 3. **Progresiones largas (§4).** Con $\tau_k(N)=N-r_k(N)$ y $q$ el menor factor primo de $k$ (los Teoremas C y D son versiones más débiles, verificadas formalmente, de resultados conocidos; véase §4.0):
    - **Teorema A [PROBADO]:** $r_k(N)=N-\lfloor N/k\rfloor$ para todo $N\le q(k-1)$.
    - **Teorema B [PROBADO]:** la fórmula falla en el entero siguiente: para $N=q(k-1)+1$, $r_k(N)=N-\lfloor N/k\rfloor-1$.
@@ -48,7 +48,7 @@ Hitos anteriores: Erdős–Turán 1936 [8] (definición y conjetura $r_3(N)=o(N)
 
 **Sobre el manuscrito de OpenAI [18].** Su resumen afirma, para cada $k\ge 3$ fijo, $r_k(N)\le C_kN\exp(-c_k(\log N)^{\varepsilon_k})$, y de ahí la conjetura de Erdős sobre sumas de recíprocos (Problema 3). El repositorio público incluye una formalización Lean; no la he recompilado ni he revisado la demostración. Véase la observación (C) de §3 sobre qué dice exactamente el enunciado formal. En cualquier caso, una cota superior de ese tipo **no** da una fórmula asintótica: sigue faltando una cota inferior del mismo orden.
 
-## 3. Tres observaciones sobre las formalizaciones
+## 3. Observaciones sobre las formalizaciones
 
 Archivo Lean: [`lean/Erdos142/FormalConjectures.lean`](lean/Erdos142/FormalConjectures.lean). Las definiciones de `formal-conjectures` (commit `1c24583`, 9‑11‑2026) y de `openai/math` (commit `4eaee87`) están copiadas literalmente en los espacios de nombres `FC` y `OAI.Erdos3`.
 
@@ -97,6 +97,16 @@ def QuantitativeDensityBound (k : ℕ) : Prop :=
 ```
 
 es decir, $\exp(-c(\log\log N)^{1+\eta})$. Basta para el Problema 3 y para (B), pero no es la cota cuasipolinómica del título. La documentación de `openai/math` ya lo advierte en lo esencial (`lean/docs/159.md`: el teorema seleccionado es la consecuencia sobre sumas de recíprocos, y la cota cuantitativa del artículo «is outside this statement»); aquí solo se precisa qué cota aparece en la proposición interna. Solo he leído los enunciados (`Model.lean`, `Results/Conclusions.lean`), no las demostraciones.
+
+**(D) Lo que hoy está certificado formalmente para $k=3$ [PROBADO; teoremas de Mathlib trasladados].** Mathlib contiene la construcción de Behrend y el teorema de Roth. Trasladados a la definición de `formal-conjectures` (archivo [`lean/Erdos142/Tres.lean`](lean/Erdos142/Tres.lean) y `maxCard_three_bounds` en `Resumen.lean`):
+
+```lean
+theorem maxCard_three_bounds :
+    (∀ N : ℕ, (N : ℝ) * Real.exp (-4 * Real.sqrt (Real.log N)) ≤ (FC.maxCard 3 N : ℝ)) ∧
+      (fun N : ℕ => (FC.maxCard 3 N : ℝ)) =o[Filter.atTop] (fun N : ℕ => (N : ℝ))
+```
+
+es decir, $N e^{-4\sqrt{\log N}}\le r_3(N)=o(N)$. Aquí no hay matemática nueva: los dos teoremas son de Mathlib (`Behrend.roth_lower_bound`, `rothNumberNat_isLittleO_id`) y lo único que se añade es el puente `r_three_eq_rothNumberNat`. Sirve para dejar a la vista la distancia entre lo certificado formalmente y una fórmula asintótica: toda respuesta admisible $f_3$ es $o(N)$ (`answer_three_isLittleO`), y nada más fino está formalizado.
 
 ## 4. Progresiones largas: el régimen $N\le k^2$
 
@@ -310,7 +320,7 @@ lake exe cache get
 lake build
 ```
 
-Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 26 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
+Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 31 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
 
 **Cálculos.** Desde `Erdos-142/verificacion`:
 

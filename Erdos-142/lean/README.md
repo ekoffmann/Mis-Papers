@@ -34,8 +34,9 @@ lake build
 | `Erdos142/Threshold.lean` (190) | `card_ge_of_mem`, `r_first_fail` | La fórmula exacta falla en $N=q(k-1)+1$ para todo $k\ge2$ (Teorema B): $q(k-1)$ es el mayor $M$ tal que vale para todo $N\le M$. |
 | `Erdos142/Sqrt.lean` (376) | `card_hitting_sq`, `r_sq_add_lt` | Cota inferior en $N=k^2$: exceso de orden $\sqrt k$ (Teorema C). |
 | `Erdos142/Construccion.lean` (269) | `Hset_hits`, `r_prime_sq_ge` | Conjunto de corte explícito de $2p-3$ elementos en $N=p^2$, $p\ge7$ primo (Teorema D): $r_p(p^2)\ge(p-1)^2+2$. |
+| `Erdos142/Tres.lean` (103) | `r_three_eq_rothNumberNat`, `behrend_r_three`, `r_three_isLittleO`, `answer_three_isLittleO` | Caso $k=3$: `r 3 N` es `rothNumberNat N` de Mathlib; se trasladan la cota de Behrend y el teorema de Roth ($r_3(N)=o(N)$). Sin matemática nueva. |
 | `Erdos142/FormalConjectures.lean` (341) | `maxCard_one`, `maxCard_two`, `erdos_142_statement_unsatisfiable`, `erdos_142_isTheta_statement_unsatisfiable`, `maxCard_eq_extremalNumber`, `erdos_142_variants_lower_of_quantitative` | Observaciones (A) y (B) de la nota sobre los enunciados de `formal-conjectures` y `openai/math` (definiciones copiadas literalmente). |
-| `Erdos142/Resumen.lean` (121) | `r_eq_extremalNumber`, `r_eq_maxCard`, `r_prime_mul_sub_one`, `resumen_rango`, `resumen_cuadrado`, `resumen_primo_cuadrado` | Identifica `r` con las definiciones de los otros repositorios, demuestra $r_p(ip-1)=i(p-1)$ (Corolario A.2), resume y reimprime los axiomas de los 26 teoremas. |
+| `Erdos142/Resumen.lean` (145) | `r_eq_extremalNumber`, `r_eq_maxCard`, `r_prime_mul_sub_one`, `resumen_rango`, `resumen_cuadrado`, `resumen_primo_cuadrado`, `maxCard_three_bounds` | Identifica `r` con las definiciones de los otros repositorios, demuestra $r_p(ip-1)=i(p-1)$ (Corolario A.2), resume y reimprime los axiomas de los 31 teoremas. |
 
 Enunciados principales, tal como compilan:
 
@@ -88,7 +89,7 @@ Trampas revisadas: la resta natural truncada solo aparece en `N - N / k`, `k - 1
 
 ## Registro de verificación
 
-Compilación limpia de todo el proyecto (`lake build`) el 10‑11‑2026: **código de salida 0**, sin `sorry`, y los 26 teoremas dependen únicamente de `[propext, Classical.choice, Quot.sound]`. Registro completo (versiones, sha256 de cada fuente, auditoría de palabras prohibidas y salida de `#print axioms`) en [`registro_verificacion.txt`](registro_verificacion.txt).
+Compilación limpia de todo el proyecto (`lake build`) el 10‑11‑2026: **código de salida 0**, sin `sorry`, y los 31 teoremas dependen únicamente de `[propext, Classical.choice, Quot.sound]`. Registro completo (versiones, sha256 de cada fuente, auditoría de palabras prohibidas y salida de `#print axioms`) en [`registro_verificacion.txt`](registro_verificacion.txt).
 
 Etiqueta resultante: **[PROBADO]** para los enunciados de la tabla. **No** están formalizados (quedan **[PLAUSIBLE]** o **[NUMÉRICO]** en `../NOTA.md`): el Corolario A.1, la unicidad del Corolario A.2, la versión afinada del Teorema C y todos los valores exactos de §5. El teorema (B) es **condicional**: toma como hipótesis `OAI.Erdos3.QuantitativeDensityTheorem`, que el repositorio `openai/math` declara demostrado y que aquí no se ha recompilado. Un lema probado no es el teorema grande: ninguno de estos enunciados es el Problema 142. Además, verificar no es descubrir: los Teoremas C y D son versiones más débiles de resultados ya publicados (Truss 1991; Brown–Freedman 1989; Xu 2013; Korsky 2026), y el argumento del Teorema A es conocido; véase §4.0 y §7 de la nota.
 

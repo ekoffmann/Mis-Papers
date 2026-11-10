@@ -9,8 +9,8 @@ Informe de investigación con evidencia verificable. Nota sin revisión por pare
 Lo que se entrega, todo comprobable:
 
 - una **revisión del estado del arte** con cada fuente verificada;
-- **tres observaciones sobre las formalizaciones públicas** del problema, dos de ellas demostradas en Lean;
-- **26 teoremas verificados en Lean 4** sobre el régimen de progresiones largas ($N\le k^2$) y los enunciados formales;
+- **cuatro observaciones sobre las formalizaciones públicas** del problema, tres de ellas demostradas en Lean;
+- **31 teoremas verificados en Lean 4** sobre el régimen de progresiones largas ($N\le k^2$) y los enunciados formales;
 - **valores exactos por ordenador** en $N=k^2$ hasta $k=11$, confirmados por varios programas independientes.
 
 **Advertencia sobre la novedad.** Una revisión independiente localizó, al final del trabajo, bibliografía previa sobre ese régimen (Brown–Freedman 1989, Truss 1991, Xu 2013 y una prepublicación de Korsky de 2026) que ya contiene versiones **más fuertes** de dos de mis cuatro teoremas. Lo que queda como aportación propia es modesto: la verificación formal, los valores exactos para $k=9,10,11$ (en particular $r_{11}(121)=103$) y las observaciones sobre los enunciados formales.
@@ -31,6 +31,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 - **[PROBADO]** (A) El enunciado formal `erdos_142` de `google-deepmind/formal-conjectures` es insatisfacible tal como está escrito: pide una sola función `answer` para todos los $k$, y $r_1(N)=N$, $r_2(N)=1$. Lo mismo su variante `isTheta`.
 - **[PROBADO, condicional]** (B) La variante `erdos_142.variants.lower` ($r_k(N)=o(N/\log N)$), marcada allí como abierta, se deduce del teorema cuantitativo que `openai/math` declara demostrado.
 - **[Comprobado por lectura]** (C) El enunciado Lean de ese teorema, $\exp(-c(\log\log N)^{1+\eta})$, es más débil que la cota del resumen del manuscrito. La documentación de `openai/math` ya lo advierte en lo esencial.
+- **[PROBADO; teoremas de Mathlib trasladados]** (D) Para $k=3$ y con la definición de `formal-conjectures`: $Ne^{-4\sqrt{\log N}}\le r_3(N)=o(N)$ (Behrend y Roth). No es matemática nueva; muestra lo lejos que está lo certificado formalmente de una fórmula asintótica.
 
 **Progresiones largas** (los cuatro teoremas están verificados en Lean; entre paréntesis, su relación con lo publicado).
 
@@ -73,7 +74,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 | Ruta | Contenido |
 |---|---|
 | [`NOTA.md`](NOTA.md), [`NOTA.pdf`](NOTA.pdf) | Nota completa: estado del arte, antecedentes, teoremas con demostración, cálculos, preguntas abiertas |
-| [`lean/`](lean/) | Proyecto Lean 4 + Mathlib (7 módulos, 26 teoremas) y [`registro_verificacion.txt`](lean/registro_verificacion.txt) |
+| [`lean/`](lean/) | Proyecto Lean 4 + Mathlib (8 módulos, 31 teoremas) y [`registro_verificacion.txt`](lean/registro_verificacion.txt) |
 | [`verificacion/`](verificacion/) | `tau_dfs.cpp`, `hs_independiente.cpp`, `tau_perfil.cpp` y `hs_perfil.cpp` (búsquedas exhaustivas), `sa.cpp` (recocido), `check_Hp.cpp`, `checks.py` y `test_dfs.py` (contrastes), `tabla.py`, y [`datos/`](verificacion/datos/) |
 | [`herramientas/build_pdf.py`](herramientas/build_pdf.py) | Generación del PDF |
 

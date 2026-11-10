@@ -3,6 +3,7 @@ import Erdos142.Ventanas
 import Erdos142.Threshold
 import Erdos142.Sqrt
 import Erdos142.Construccion
+import Erdos142.Tres
 import Erdos142.FormalConjectures
 
 /-!
@@ -19,6 +20,8 @@ en los demás módulos y vuelve a imprimir los axiomas de los que depende cada u
 * `Erdos142.resumen_rango` : fórmula exacta `r_k(N) = N - ⌊N/k⌋` para `N ≤ q (k - 1)` (con `q` el
   menor factor primo de `k`) y fallo de la fórmula en `N = q (k - 1) + 1`.
 * `Erdos142.resumen_cuadrado` : en `N = k²`, `r_k(k²) ≤ k² - k - s - 1` si `8 s² + 8 s + 4 ≤ k`.
+* `Erdos142.maxCard_three_bounds` : para `k = 3`, las cotas de Behrend y de Roth (teoremas de
+  Mathlib) trasladadas a la definición de formal-conjectures.
 * `Erdos142.resumen_primo_cuadrado` : para `p ≥ 7` primo,
   `(p - 1)² + 2 ≤ r_p(p²) ≤ p² - p - 1`.
 -/
@@ -91,6 +94,22 @@ theorem resumen_primo_cuadrado (p : ℕ) (hp : p.Prime) (hp7 : 7 ≤ p) :
   have h := r_sq_add_lt p 0 (by omega) (by omega)
   omega
 
+/-- **El caso `k = 3` con la definición de formal-conjectures.** Las dos cotas que Mathlib ya
+demuestra (Behrend por abajo, Roth por arriba), trasladadas a `maxCard 3 N`.  No es una fórmula
+asintótica: es lo que hoy está certificado formalmente sobre el caso `k = 3` del Problema 142. -/
+theorem maxCard_three_bounds :
+    (∀ N : ℕ, (N : ℝ) * Real.exp (-4 * Real.sqrt (Real.log N)) ≤ (FC.maxCard 3 N : ℝ)) ∧
+      (fun N : ℕ => (FC.maxCard 3 N : ℝ)) =o[Filter.atTop] (fun N : ℕ => (N : ℝ)) := by
+  have h : ∀ N : ℕ, FC.maxCard 3 N = r 3 N := fun N => (r_eq_maxCard 3 N (by norm_num)).symm
+  refine ⟨fun N => ?_, ?_⟩
+  · rw [h N]
+    exact behrend_r_three N
+  · have hfun : (fun N : ℕ => (FC.maxCard 3 N : ℝ)) = fun N : ℕ => (r 3 N : ℝ) := by
+      funext N
+      rw [h N]
+    rw [hfun]
+    exact r_three_isLittleO
+
 end Erdos142
 
 #print axioms Erdos142.r_add_div_le
@@ -107,6 +126,10 @@ end Erdos142
 #print axioms Erdos142.r_sq_add_lt
 #print axioms Erdos142.Hset_hits
 #print axioms Erdos142.r_prime_sq_ge
+#print axioms Erdos142.r_three_eq_rothNumberNat
+#print axioms Erdos142.behrend_r_three
+#print axioms Erdos142.r_three_isLittleO
+#print axioms Erdos142.answer_three_isLittleO
 #print axioms Erdos142.maxCard_one
 #print axioms Erdos142.maxCard_two
 #print axioms Erdos142.erdos_142_statement_unsatisfiable
@@ -119,3 +142,4 @@ end Erdos142
 #print axioms Erdos142.resumen_rango
 #print axioms Erdos142.resumen_cuadrado
 #print axioms Erdos142.resumen_primo_cuadrado
+#print axioms Erdos142.maxCard_three_bounds
