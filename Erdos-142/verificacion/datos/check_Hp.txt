@@ -1,0 +1,1 @@
+primos comprobados en [7, 499]: 92; resultado: TODOS OK   (./check_Hp 499, 2 min)

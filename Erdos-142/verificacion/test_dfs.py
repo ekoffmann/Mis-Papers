@@ -20,4 +20,16 @@ for k in range(2, 8):
                     bad += 1
                     print("DISCREPANCIA", k, N, B, flags)
 print(f"casos comprobados: {n}, discrepancias: {bad}")
+
+# La opción --split J j reparte el espacio de prefijos en J partes disjuntas: el número de
+# soluciones de las partes debe sumar el total (se usa en la decisión k=11, N=121, B=16).
+import re
+def nsol(*args):
+    out = subprocess.run([exe, *map(str, args)], capture_output=True, text=True).stdout
+    return int(re.search(r"soluciones=(\d+)", out).group(1))
+total = nsol(7, 49, 11, "--all", "--nosym")
+partes = [nsol(7, 49, 11, "--all", "--nosym", "--split", 3, j) for j in range(3)]
+print(f"particion: total={total}, partes={partes}, suma={sum(partes)}")
+if total != sum(partes) or total != 1257:
+    bad += 1
 sys.exit(1 if bad else 0)

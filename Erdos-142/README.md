@@ -35,7 +35,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 - **[PROBADO]** Teorema A: $r_k(N)=N-\lfloor N/k\rfloor$ para todo $N\le q(k-1)$.
 - **[PROBADO]** Teorema B: ese rango es óptimo para todo $k\ge2$: $r_k(q(k-1)+1)=N-\lfloor N/k\rfloor-1$.
 - **[PROBADO]** Teorema C: si $\tau_k(k^2)=k+s$ entonces $k\lt8s^2+8s+4$; es decir, en $N=k^2$ hace falta un exceso de orden $\sqrt k$ sobre la cota trivial.
-- **[PLAUSIBLE + NUMÉRICO]** Teorema D: $\tau_p(p^2)\le2p-3$ para todo primo $p\ge5$, con un conjunto explícito (prueba a mano; comprobado por fuerza bruta para $p\le61$).
+- **[PLAUSIBLE + NUMÉRICO]** Teorema D: $\tau_p(p^2)\le2p-3$ para todo primo $p\ge5$, con un conjunto explícito (prueba a mano; comprobado por fuerza bruta para todos los primos $p\le499$).
 - **[PLAUSIBLE]** Corolarios: $N-r_k(N)\sim N/k$ uniformemente para $N\le(k-k^{0{,}525})(k-1)$ (usa [2]); y el caso $t=1$ de una conjetura de Ahmed–Dybizbański–Snevily [1], con unicidad del conjunto extremal.
 
 **Cálculos exactos en $N=k^2$.**
@@ -54,7 +54,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 | $r_k(N)=N-\lfloor N/k\rfloor$ para $N\le q(k-1)$ | `r_eq_of_le_minFac` | **[PROBADO]** |
 | El rango anterior es óptimo | `r_first_fail` | **[PROBADO]** |
 | $\tau_k(k^2)=k+s\Rightarrow k\lt8s^2+8s+4$ | `card_hitting_sq`, `r_sq_add_lt` | **[PROBADO]** |
-| $\tau_p(p^2)\le2p-3$, $p\ge5$ primo | Prueba en §4.4 de la nota; `checks.py` para $p\le61$ | **[PLAUSIBLE]** + **[NUMÉRICO]** |
+| $\tau_p(p^2)\le2p-3$, $p\ge5$ primo | Prueba en §4.4 de la nota; `check_Hp.cpp` para los 92 primos $7\le p\le499$ | **[PLAUSIBLE]** + **[NUMÉRICO]** |
 | $\tau_k(k^2)$ para $k\le10$; $17\le\tau_{11}(121)\le18$ | `verificacion/datos/exhaustivo.txt` ($8{,}5\cdot10^9$ nodos para descartar 16); conjuntos en `mejores_conjuntos.txt` | **[NUMÉRICO]** |
 | $\tau_p(p^2)=2p-3$ es falsa para $p\ge11$ | Conjuntos explícitos re-verificados por fuerza bruta en `checks.py` | **[NUMÉRICO]** (certificado comprobable) |
 | El buscador exhaustivo es correcto | Coincide con OEIS A003002–A003005, con las tablas de [1] (incluido el número de conjuntos extremales en 7 casos) y con una búsqueda independiente en 1160 casos | Alta, no formal |

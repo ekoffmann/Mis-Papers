@@ -39,3 +39,5 @@
 
 TODAS LAS COMPROBACIONES PASAN
 casos comprobados: 1160, discrepancias: 0
+particion: total=1257, partes=[475, 303, 479], suma=1257
+primos comprobados en [7, 499]: 92; resultado: TODOS OK   (./check_Hp 499, 2 min)

@@ -216,7 +216,7 @@ Entonces $H_p$ corta todas las PA de $p$ términos de $[1,p^2]$ y $\lvert H_p\rv
 
 Los tres bloques de $H_p$ son disjuntos y suman $3+(p-4)+(p-2)=2p-3$. $\square$
 
-`checks.py` comprueba por fuerza bruta que $H_p$ corta todas las PA para todos los primos $7\le p\le61$, y que la fórmula falla para $p=5$ (por eso el teorema pide $p\ge7$).
+Comprobación por fuerza bruta: `check_Hp.cpp` verifica que $H_p$ corta todas las PA para los 92 primos $7\le p\le499$ (y `checks.py`, de forma independiente, para $p\le61$); la fórmula falla para $p=5$, y por eso el teorema pide $p\ge7$.
 
 ## 5. Cálculos exactos en $N=k^2$
 
@@ -300,6 +300,10 @@ g++ -O2 -o sa sa.cpp
 ```
 
 ```bash
+g++ -O2 -o check_Hp check_Hp.cpp
+```
+
+```bash
 python3 checks.py
 ```
 
@@ -307,7 +311,8 @@ python3 checks.py
 python3 test_dfs.py
 ```
 
-- `checks.py` (Python puro, independiente del C++): contrasta con OEIS A003002–A003005, comprueba los Teoremas A y B para $k\le9$, el lema de ventanas, la construcción $H_p$ para $p\le61$, la cota del Teorema C, la relajación lineal y vuelve a verificar por fuerza bruta todos los conjuntos guardados. Salida en [`verificacion/salida.txt`](verificacion/salida.txt).
+- `checks.py` (Python puro, independiente del C++): contrasta con OEIS A003002–A003005 y con el número de conjuntos extremales de la tabla de [1] en 7 casos, comprueba los Teoremas A y B para $k\le9$, el Corolario A.2, el lema de ventanas, la construcción $H_p$ para $p\le61$, la cota del Teorema C, la relajación lineal y vuelve a verificar por fuerza bruta todos los conjuntos guardados. Salida en [`verificacion/salida.txt`](verificacion/salida.txt).
+- `check_Hp.cpp`: comprueba el Teorema D por fuerza bruta para todos los primos hasta el límite dado (`./check_Hp 499`).
 - `test_dfs.py`: compara `tau_dfs` con la búsqueda de `checks.py` en 1160 casos pequeños, con y sin podas; cero discrepancias.
 - `tau_dfs k N B` decide si existe un conjunto de corte de tamaño $\le B$. Las podas son condiciones necesarias (explicadas en la cabecera del archivo); como control, $(k,N,B)=(11,121,15)$ da «no existe» tanto con todas las podas ($3{,}9\cdot10^8$ nodos) como sin las podas de simetría y de ventanas ($1{,}1\cdot10^9$ nodos). Registros en [`verificacion/datos/exhaustivo.txt`](verificacion/datos/exhaustivo.txt).
 - `sa k N B segundos semilla` busca un conjunto de tamaño $B$; solo puede demostrar existencia. Registros en [`verificacion/datos/recocido.txt`](verificacion/datos/recocido.txt).
