@@ -34,7 +34,7 @@ lake build
 | `Erdos142/Sqrt.lean` (376) | `card_hitting_sq`, `r_sq_add_lt` | Cota inferior en $N=k^2$: exceso de orden $\sqrt k$ (Teorema C). |
 | `Erdos142/Construccion.lean` (269) | `Hset_hits`, `r_prime_sq_ge` | Conjunto de corte explícito de $2p-3$ elementos en $N=p^2$, $p\ge7$ primo (Teorema D): $r_p(p^2)\ge(p-1)^2+2$. |
 | `Erdos142/FormalConjectures.lean` (341) | `maxCard_one`, `maxCard_two`, `erdos_142_statement_unsatisfiable`, `erdos_142_isTheta_statement_unsatisfiable`, `maxCard_eq_extremalNumber`, `erdos_142_variants_lower_of_quantitative` | Observaciones (A) y (B) de la nota sobre los enunciados de `formal-conjectures` y `openai/math` (definiciones copiadas literalmente). |
-| `Erdos142/Resumen.lean` (87) | `r_eq_extremalNumber`, `r_eq_maxCard`, `resumen_rango`, `resumen_cuadrado`, `resumen_primo_cuadrado` | Identifica `r` con las definiciones de los otros repositorios, resume y reimprime los axiomas de los 24 teoremas. |
+| `Erdos142/Resumen.lean` (119) | `r_eq_extremalNumber`, `r_eq_maxCard`, `r_prime_mul_sub_one`, `resumen_rango`, `resumen_cuadrado`, `resumen_primo_cuadrado` | Identifica `r` con las definiciones de los otros repositorios, demuestra $r_p(ip-1)=i(p-1)$ (Corolario A.2), resume y reimprime los axiomas de los 25 teoremas. |
 
 Enunciados principales, tal como compilan:
 
@@ -87,8 +87,8 @@ Trampas revisadas: la resta natural truncada solo aparece en `N - N / k`, `k - 1
 
 ## Registro de verificación
 
-Compilación limpia de todo el proyecto (`lake build`) el 10‑11‑2026: **código de salida 0**, sin `sorry`, y los 24 teoremas dependen únicamente de `[propext, Classical.choice, Quot.sound]`. Registro completo (versiones, sha256 de cada fuente, auditoría de palabras prohibidas y salida de `#print axioms`) en [`registro_verificacion.txt`](registro_verificacion.txt).
+Compilación limpia de todo el proyecto (`lake build`) el 10‑11‑2026: **código de salida 0**, sin `sorry`, y los 25 teoremas dependen únicamente de `[propext, Classical.choice, Quot.sound]`. Registro completo (versiones, sha256 de cada fuente, auditoría de palabras prohibidas y salida de `#print axioms`) en [`registro_verificacion.txt`](registro_verificacion.txt).
 
-Etiqueta resultante: **[PROBADO]** para los enunciados de la tabla. **No** están formalizados (quedan **[PLAUSIBLE]** o **[NUMÉRICO]** en `../NOTA.md`): los Corolarios A.1 y A.2, el lema de ventanas, la versión afinada del Teorema C y todos los valores exactos de §5. El teorema (B) es **condicional**: toma como hipótesis `OAI.Erdos3.QuantitativeDensityTheorem`, que el repositorio `openai/math` declara demostrado y que aquí no se ha recompilado. Un lema probado no es el teorema grande: ninguno de estos enunciados es el Problema 142.
+Etiqueta resultante: **[PROBADO]** para los enunciados de la tabla. **No** están formalizados (quedan **[PLAUSIBLE]** o **[NUMÉRICO]** en `../NOTA.md`): el Corolario A.1, la unicidad del Corolario A.2, el lema de ventanas, la versión afinada del Teorema C y todos los valores exactos de §5. El teorema (B) es **condicional**: toma como hipótesis `OAI.Erdos3.QuantitativeDensityTheorem`, que el repositorio `openai/math` declara demostrado y que aquí no se ha recompilado. Un lema probado no es el teorema grande: ninguno de estos enunciados es el Problema 142.
 
 Las advertencias que emite `lake build` son solo de estilo (cabecera de copyright, uso de `show`) y no afectan a la corrección.

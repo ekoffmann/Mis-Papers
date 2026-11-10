@@ -136,7 +136,7 @@ En particular, para $p$ primo, $r_p(N)=N-\lfloor N/p\rfloor$ para todo $N\le p(p
 
 de modo que $N-r_k(N)=(1+O(k^{-0{,}475}))N/k+O(1)$. En este rango ($k$ algo mayor que $\sqrt N$) sí hay, pues, una fórmula asintótica para el complemento.
 
-**Corolario A.2 (caso $t=1$ de una conjetura de Ahmed–Dybizbański–Snevily) [PLAUSIBLE + NUMÉRICO].** Para $p$ primo y $1\le i\le p-1$ se tiene $r_p(ip-1)=i(p-1)$, y el conjunto extremal es único: $[1,ip-1]$ menos los múltiplos de $p$.
+**Corolario A.2 (caso $t=1$ de una conjetura de Ahmed–Dybizbański–Snevily).** Para $p$ primo y $1\le i\le p-1$ se tiene $r_p(ip-1)=i(p-1)$ **[PROBADO: `r_prime_mul_sub_one`]**, y el conjunto extremal es único: $[1,ip-1]$ menos los múltiplos de $p$ **[PLAUSIBLE + NUMÉRICO]**.
 
 *Demostración.* El valor es el Teorema A con $N=ip-1\le p(p-1)$. Unicidad: un conjunto de corte $H$ de tamaño $i-1$ tiene exactamente un elemento en cada bloque $[(j-1)p+1,jp]$ y exactamente uno en cada bloque $[jp,(j+1)p-1]$, $1\le j\le i-1$; el $j$-ésimo elemento está en ambos, cuya intersección es $\lbrace jp\rbrace$. $\square$
 
@@ -287,7 +287,7 @@ lake exe cache get
 lake build
 ```
 
-Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 24 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
+Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 25 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
 
 **Cálculos.** Desde `Erdos-142/verificacion`:
 
@@ -317,7 +317,7 @@ python3 test_dfs.py
 - `tau_dfs k N B` decide si existe un conjunto de corte de tamaño $\le B$. Las podas son condiciones necesarias (explicadas en la cabecera del archivo); como control, $(k,N,B)=(11,121,15)$ da «no existe» tanto con todas las podas ($3{,}9\cdot10^8$ nodos) como sin las podas de simetría y de ventanas ($1{,}1\cdot10^9$ nodos). Registros en [`verificacion/datos/exhaustivo.txt`](verificacion/datos/exhaustivo.txt).
 - `sa k N B segundos semilla` busca un conjunto de tamaño $B$; solo puede demostrar existencia. Registros en [`verificacion/datos/recocido.txt`](verificacion/datos/recocido.txt).
 
-**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en una búsqueda exhaustiva por ordenador no formalizada (validada como se indica). Los Corolarios A.1 y A.2, el Lema 2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva.
+**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en una búsqueda exhaustiva por ordenador no formalizada (validada como se indica). El Corolario A.1, la unicidad del Corolario A.2, el Lema 2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva.
 
 ## Referencias
 

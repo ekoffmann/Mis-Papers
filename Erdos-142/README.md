@@ -10,7 +10,7 @@ Lo que sí se entrega, todo comprobable:
 
 - una **revisión del estado del arte** con cada fuente verificada (§2 de la nota);
 - **tres observaciones sobre las formalizaciones públicas** del problema, dos de ellas demostradas en Lean;
-- **cuatro teoremas elementales en el régimen de progresiones largas** ($N\le k^2$), los cuatro verificados en Lean 4 (24 teoremas en total, compilación limpia);
+- **cuatro teoremas elementales en el régimen de progresiones largas** ($N\le k^2$), los cuatro verificados en Lean 4 (25 teoremas en total, compilación limpia);
 - **valores exactos nuevos por ordenador** en $N=k^2$, que además **refutan una conjetura natural** que yo mismo había formulado.
 
 Documento principal: [`NOTA.md`](NOTA.md) ([`NOTA.pdf`](NOTA.pdf)).
@@ -36,7 +36,8 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 - **[PROBADO]** Teorema B: ese rango es óptimo para todo $k\ge2$: $r_k(q(k-1)+1)=N-\lfloor N/k\rfloor-1$.
 - **[PROBADO]** Teorema C: si $\tau_k(k^2)=k+s$ entonces $k\lt8s^2+8s+4$; es decir, en $N=k^2$ hace falta un exceso de orden $\sqrt k$ sobre la cota trivial.
 - **[PROBADO]** Teorema D: $\tau_p(p^2)\le2p-3$ para todo primo $p\ge7$, con un conjunto explícito (además comprobado por fuerza bruta para todos los primos $p\le499$); para $p=5$, $\tau_5(25)=7$ por cálculo exacto **[NUMÉRICO]**.
-- **[PLAUSIBLE]** Corolarios: $N-r_k(N)\sim N/k$ uniformemente para $N\le(k-k^{0{,}525})(k-1)$ (usa [2]); y el caso $t=1$ de una conjetura de Ahmed–Dybizbański–Snevily [1], con unicidad del conjunto extremal.
+- **[PLAUSIBLE]** Corolario A.1: $N-r_k(N)\sim N/k$ uniformemente para $N\le(k-k^{0{,}525})(k-1)$ (usa [2]).
+- **[PROBADO]** Corolario A.2: $r_p(ip-1)=i(p-1)$ para $p$ primo y $1\le i\le p-1$, el caso $t=1$ de una conjetura de Ahmed–Dybizbański–Snevily [1]; la unicidad del conjunto extremal queda **[PLAUSIBLE + NUMÉRICO]**.
 
 **Cálculos exactos en $N=k^2$.**
 
@@ -73,7 +74,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 | Ruta | Contenido |
 |---|---|
 | [`NOTA.md`](NOTA.md), [`NOTA.pdf`](NOTA.pdf) | Nota completa: estado del arte, observaciones, teoremas con demostración, cálculos, preguntas abiertas |
-| [`lean/`](lean/) | Proyecto Lean 4 + Mathlib (6 módulos, 24 teoremas) y [`registro_verificacion.txt`](lean/registro_verificacion.txt) |
+| [`lean/`](lean/) | Proyecto Lean 4 + Mathlib (6 módulos, 25 teoremas) y [`registro_verificacion.txt`](lean/registro_verificacion.txt) |
 | [`verificacion/`](verificacion/) | `tau_dfs.cpp` (búsqueda exhaustiva), `sa.cpp` (recocido), `checks.py` y `test_dfs.py` (contrastes), `tabla.py`, y [`datos/`](verificacion/datos/) |
 | [`herramientas/build_pdf.py`](herramientas/build_pdf.py) | Generación del PDF |
 

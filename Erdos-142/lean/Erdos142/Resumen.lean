@@ -13,6 +13,8 @@ en los demás módulos y vuelve a imprimir los axiomas de los que depende cada u
 * `Erdos142.r_eq_extremalNumber`, `Erdos142.r_eq_maxCard` : la función `r` usada aquí es la misma
   que `OAI.Erdos3.extremalNumber` (openai/math) y, para `k ≥ 2`, que
   `Set.IsAPOfLengthFree.maxCard` (google-deepmind/formal-conjectures).
+* `Erdos142.r_prime_mul_sub_one` : `r_p(ip - 1) = i (p - 1)` para `p` primo y `1 ≤ i ≤ p - 1`
+  (parte numérica del Corolario A.2 de la nota).
 * `Erdos142.resumen_rango` : fórmula exacta `r_k(N) = N - ⌊N/k⌋` para `N ≤ q (k - 1)` (con `q` el
   menor factor primo de `k`) y fallo de la fórmula en `N = q (k - 1) + 1`.
 * `Erdos142.resumen_cuadrado` : en `N = k²`, `r_k(k²) ≤ k² - k - s - 1` si `8 s² + 8 s + 4 ≤ k`.
@@ -30,6 +32,35 @@ theorem r_eq_extremalNumber (k N : ℕ) : r k N = OAI.Erdos3.extremalNumber k N 
 theorem r_eq_maxCard (k N : ℕ) (hk : 2 ≤ k) : r k N = FC.maxCard k N := by
   rw [maxCard_eq_extremalNumber k N hk]
   rfl
+
+/-- Corolario A.2 (parte numérica): para `p` primo y `1 ≤ i ≤ p - 1`, `r_p(ip - 1) = i (p - 1)`.
+Es el caso `t = 1` de la conjetura 3 de Ahmed–Dybizbański–Snevily (2013). -/
+theorem r_prime_mul_sub_one (p i : ℕ) (hp : p.Prime) (hi1 : 1 ≤ i) (hi : i ≤ p - 1) :
+    r p (i * p - 1) = i * (p - 1) := by
+  have hp2 := hp.two_le
+  obtain ⟨q, rfl⟩ : ∃ q, p = q + 1 := ⟨p - 1, by omega⟩
+  obtain ⟨t, rfl⟩ : ∃ t, i = t + 1 := ⟨i - 1, by omega⟩
+  simp only [Nat.add_sub_cancel] at hi ⊢
+  have e1 : (t + 1) * (q + 1) - 1 = t * (q + 1) + q := by
+    have : (t + 1) * (q + 1) = t * (q + 1) + q + 1 := by ring
+    omega
+  have hN : (t + 1) * (q + 1) - 1 ≤ (q + 1) * (q + 1 - 1) := by
+    rw [e1, Nat.add_sub_cancel]
+    have h1 : t * (q + 1) ≤ (q - 1) * (q + 1) := Nat.mul_le_mul_right _ (by omega)
+    have h2 : (q - 1) * (q + 1) + q ≤ (q + 1) * q := by
+      obtain ⟨u, rfl⟩ : ∃ u, q = u + 1 := ⟨q - 1, by omega⟩
+      simp only [Nat.add_sub_cancel]
+      nlinarith
+    omega
+  rw [r_prime_eq (q + 1) _ hp hN, e1]
+  have hdiv : (t * (q + 1) + q) / (q + 1) = t := by
+    rw [Nat.add_comm, Nat.add_mul_div_right _ _ (by omega : 0 < q + 1),
+      Nat.div_eq_of_lt (by omega : q < q + 1)]
+    omega
+  rw [hdiv]
+  have e2 : t * (q + 1) = t * q + t := by ring
+  have e3 : (t + 1) * q = t * q + q := by ring
+  omega
 
 /-- **Fórmula exacta y optimalidad de su rango.** Sea `q` el menor factor primo de `k ≥ 2`.
 Entonces `r_k(N) = N - ⌊N/k⌋` para todo `N ≤ q (k - 1)`, y en `N = q (k - 1) + 1` la fórmula
@@ -82,6 +113,7 @@ end Erdos142
 #print axioms Erdos142.erdos_142_variants_lower_of_quantitative
 #print axioms Erdos142.r_eq_extremalNumber
 #print axioms Erdos142.r_eq_maxCard
+#print axioms Erdos142.r_prime_mul_sub_one
 #print axioms Erdos142.resumen_rango
 #print axioms Erdos142.resumen_cuadrado
 #print axioms Erdos142.resumen_primo_cuadrado
