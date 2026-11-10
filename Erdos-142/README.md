@@ -11,9 +11,9 @@ Lo que se entrega, todo comprobable:
 - una **revisión del estado del arte** con cada fuente verificada;
 - **tres observaciones sobre las formalizaciones públicas** del problema, dos de ellas demostradas en Lean;
 - **26 teoremas verificados en Lean 4** sobre el régimen de progresiones largas ($N\le k^2$) y los enunciados formales;
-- **valores exactos por ordenador** en $N=k^2$ hasta $k=10$, confirmados por dos programas independientes.
+- **valores exactos por ordenador** en $N=k^2$ hasta $k=11$, confirmados por varios programas independientes.
 
-**Advertencia sobre la novedad.** Una revisión independiente localizó, al final del trabajo, bibliografía previa sobre ese régimen (Brown–Freedman 1989, Truss 1991, Xu 2013 y una prepublicación de Korsky de 2026) que ya contiene versiones **más fuertes** de dos de mis cuatro teoremas. Lo que queda como aportación propia es modesto: la verificación formal, los datos exactos para $k=9,10$ y la cota para $k=11$, y las observaciones sobre los enunciados formales.
+**Advertencia sobre la novedad.** Una revisión independiente localizó, al final del trabajo, bibliografía previa sobre ese régimen (Brown–Freedman 1989, Truss 1991, Xu 2013 y una prepublicación de Korsky de 2026) que ya contiene versiones **más fuertes** de dos de mis cuatro teoremas. Lo que queda como aportación propia es modesto: la verificación formal, los valores exactos para $k=9,10,11$ (en particular $r_{11}(121)=103$) y las observaciones sobre los enunciados formales.
 
 Documento principal: [`NOTA.md`](NOTA.md) ([`NOTA.pdf`](NOTA.pdf)).
 
@@ -42,7 +42,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 
 **Cálculos exactos en $N=k^2$.**
 
-- **[NUMÉRICO]** $\tau_k(k^2)=3,4,6,7,9,11,13,15,16$ para $k=2,\dots,10$, y $17\le\tau_{11}(121)\le18$. Dos implementaciones independientes coinciden.
+- **[NUMÉRICO]** $\tau_k(k^2)=3,4,6,7,9,11,13,15,16,18$ para $k=2,\dots,11$; en particular $r_{10}(100)=84$ y $r_{11}(121)=103$. Para $k\le10$ coinciden cuatro programas; el caso decisivo de $k=11$ (no hay conjuntos de 17) lo confirman dos.
 - **[NUMÉRICO]** La igualdad $\tau_p(p^2)=2p-3$, que conjeturé a mitad del trabajo, falla ya en $p=11,13,17,19,23$ (conjuntos explícitos verificados). Para $p$ grande esto ya se seguía de [24] y [25].
 - **[Abierto, de Korsky [25]]** ¿Es $\tau_n(n^2)\ge(1+\eta)n$? Conjetura de Korsky: $\tau_n(n^2)=(2-o(1))n$. Mis datos son compatibles con ella, sin demostrar nada.
 
@@ -56,7 +56,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 | $r_k(N)=N-\lfloor N/k\rfloor$ para $N\le q(k-1)$, y fallo en $q(k-1)+1$ | `r_eq_of_le_minFac`, `r_first_fail` | **[PROBADO]** |
 | $\tau_k(k^2)=k+s\Rightarrow k\lt8s^2+8s+4$ | `card_hitting_sq`, `r_sq_add_lt` | **[PROBADO]** |
 | $\tau_p(p^2)\le2p-3$, $p\ge7$ primo | `Hset_hits`, `r_prime_sq_ge`; además fuerza bruta para los 92 primos $7\le p\le499$ | **[PROBADO]** |
-| $\tau_k(k^2)$ para $k\le10$; $17\le\tau_{11}(121)\le18$ | `verificacion/datos/exhaustivo.txt` e `independiente.txt` (dos algoritmos distintos); conjuntos en `mejores_conjuntos.txt` | **[NUMÉRICO]** |
+| $\tau_k(k^2)$ para $k\le11$ ($\tau_{11}(121)=18$) | `verificacion/datos/exhaustivo.txt`, `independiente.txt` y `perfiles.txt` (cuatro programas; dos para el tamaño 17); conjuntos en `mejores_conjuntos.txt` | **[NUMÉRICO]** |
 | $\tau_p(p^2)\lt2p-3$ para $p=11,13,17,19,23$ | Conjuntos explícitos re-verificados por fuerza bruta en `checks.py` | **[NUMÉRICO]** (certificado comprobable) |
 | Los Teoremas C y D son más débiles que resultados publicados | Introducción de Korsky [25], leída directamente; registros Crossref de [22], [23], [24] | Alta |
 
@@ -64,8 +64,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 
 - **No hay avance sobre el problema original** ($k$ fijo, $N\to\infty$). Los resultados viven en otro régimen ($N\le k^2$).
 - **Novedad limitada.** La bibliografía de ese régimen ([22]–[25]) se localizó solo en la revisión final. Los Teoremas C y D son redescubrimientos más débiles; el argumento del Teorema A es conocido. No he leído directamente [22], [23], [24] ni [26]: sus resultados se citan según la introducción de [25].
-- **Cotas inferiores por ordenador.** Los valores exactos para $k=9,10$ y la cota para $k=11$ dependen de búsquedas exhaustivas no formalizadas (dos programas independientes coinciden).
-- **$\tau_{11}(121)$ queda sin decidir** entre 17 y 18; descartar 17 exhaustivamente costaría unas 20 veces más cómputo.
+- **Cotas inferiores por ordenador.** Los valores exactos para $k=9,10,11$ dependen de búsquedas exhaustivas no formalizadas. La exclusión del tamaño 17 para $k=11$ descansa en dos programas que comparten la idea matemática (perfiles de filas) aunque no el código de búsqueda.
 - **Resultado de OpenAI.** La observación (B) es condicional a un teorema que no he recompilado ni revisado.
 - **Sitios no consultables.** `erdosproblems.com` y `oeis.org` rechazan el acceso automático; usé sus repositorios públicos de datos en GitHub.
 
@@ -75,7 +74,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 |---|---|
 | [`NOTA.md`](NOTA.md), [`NOTA.pdf`](NOTA.pdf) | Nota completa: estado del arte, antecedentes, teoremas con demostración, cálculos, preguntas abiertas |
 | [`lean/`](lean/) | Proyecto Lean 4 + Mathlib (7 módulos, 26 teoremas) y [`registro_verificacion.txt`](lean/registro_verificacion.txt) |
-| [`verificacion/`](verificacion/) | `tau_dfs.cpp` y `hs_independiente.cpp` (dos búsquedas exhaustivas independientes), `sa.cpp` (recocido), `check_Hp.cpp`, `checks.py` y `test_dfs.py` (contrastes), `tabla.py`, y [`datos/`](verificacion/datos/) |
+| [`verificacion/`](verificacion/) | `tau_dfs.cpp`, `hs_independiente.cpp`, `tau_perfil.cpp` y `hs_perfil.cpp` (búsquedas exhaustivas), `sa.cpp` (recocido), `check_Hp.cpp`, `checks.py` y `test_dfs.py` (contrastes), `tabla.py`, y [`datos/`](verificacion/datos/) |
 | [`herramientas/build_pdf.py`](herramientas/build_pdf.py) | Generación del PDF |
 
 Para reproducir, véase §8 de la nota y [`lean/README.md`](lean/README.md).

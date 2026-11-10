@@ -1,7 +1,7 @@
 # Tabla exacta de tau_k(N) = N - r_k(N), generada con tabla.py (buscador exhaustivo tau_dfs).
 # Columnas: k N tau_k(N) r_k(N).  Cada tabla se detiene donde una decisión supera 150 s.
-# Valores adicionales obtenidos con ejecuciones más largas (ver exhaustivo.txt):
-#   tau_9(81) = 15, tau_10(100) = 16, 17 <= tau_11(121) <= 18.
+# Valores adicionales obtenidos con ejecuciones más largas (ver exhaustivo.txt y perfiles.txt):
+#   tau_9(81) = 15, tau_10(100) = 16, tau_11(121) = 18.
 3 1 0 1
 3 2 0 2
 3 3 1 2

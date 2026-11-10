@@ -217,6 +217,7 @@ def s_closed(k):
     return s
 
 TAU_SQ = {2: 3, 3: 4, 4: 6, 5: 7, 6: 9, 7: 11, 8: 13}      # valores exactos de tau_k(k^2) (tau_dfs)
+TAU_SQ_GRANDES = {9: 15, 10: 16, 11: 18}                   # ídem, de las búsquedas largas (datos/)
 
 def test_cota_inferior():
     ok = True
@@ -226,9 +227,10 @@ def test_cota_inferior():
             ok = False
             print(f"   tau_{k}({k*k}) = {t} (esperado {TAU_SQ[k]})")
     check("tau_k(k^2) = 3, 4, 6, 7, 9 para k = 2..6 (búsqueda exhaustiva en Python)", ok)
-    check("Teorema C: tau_k(k^2) >= k + s_min(k) para k = 2..8",
-          all(TAU_SQ[k] >= k + s_min(k) for k in TAU_SQ),
-          str({k: (TAU_SQ[k], k + s_min(k)) for k in TAU_SQ}))
+    todos = {**TAU_SQ, **TAU_SQ_GRANDES}
+    check("Teorema C: tau_k(k^2) >= k + s_min(k) para k = 2..11",
+          all(todos[k] >= k + s_min(k) for k in todos),
+          str({k: (todos[k], k + s_min(k)) for k in todos}))
     check("Forma cerrada: s_closed(k) <= s_min(k) para 2 <= k <= 20000",
           all(s_closed(k) <= s_min(k) for k in range(2, 20001)))
     check("Forma cerrada: s_min(k) > (sqrt((k-2)/2) - 1)/2 para 2 <= k <= 20000",

@@ -15,7 +15,7 @@ Sea $r_k(N)$ el mayor tamaño de un subconjunto de $\lbrace 1,\dots,N\rbrace$ si
    - **Teorema B [PROBADO]:** la fórmula falla en el entero siguiente: para $N=q(k-1)+1$, $r_k(N)=N-\lfloor N/k\rfloor-1$.
    - **Teorema C [PROBADO]:** en $N=k^2$ hace falta un exceso de orden $\sqrt{k}$: si $\tau_k(k^2)=k+s$ entonces $k \lt 8s^2+8s+4$.
    - **Teorema D [PROBADO para $p\ge7$]:** $\tau_p(p^2)\le 2p-3$ para todo primo $p\ge 5$ (construcción explícita; el caso $p=5$ por cálculo exacto).
-4. **Cálculos exactos (§5) [NUMÉRICO].** $\tau_k(k^2)=3,4,6,7,9,11,13,15,16$ para $k=2,\dots,10$ y $17\le\tau_{11}(121)\le 18$. La igualdad $\tau_p(p^2)=2p-3$, cierta para $p=5,7$, ya falla en $p=11,13,17,19,23$ (para $p$ grande esto se sigue de los resultados de Xu y de Korsky).
+4. **Cálculos exactos (§5) [NUMÉRICO].** $\tau_k(k^2)=3,4,6,7,9,11,13,15,16,18$ para $k=2,\dots,11$. La igualdad $\tau_p(p^2)=2p-3$, cierta para $p=5,7$, ya falla en $p=11,13,17,19,23$ (para $p$ grande esto se sigue de los resultados de Xu y de Korsky).
 5. **Preguntas abiertas (§6)** y **qué es nuevo y qué no (§7)**.
 
 Nada de lo anterior aporta información sobre la asintótica con $k$ fijo.
@@ -236,7 +236,7 @@ La formalización Lean sigue esta demostración (lemas `hits_succ`, `hits_self`,
 
 ## 5. Cálculos exactos en $N=k^2$
 
-Herramientas (carpeta [`verificacion/`](verificacion/)): un buscador exhaustivo propio en C++ (`tau_dfs.cpp`), un recocido simulado para cotas superiores (`sa.cpp`) y un script de contraste independiente en Python (`checks.py`). Detalles y controles en §8.
+Herramientas (carpeta [`verificacion/`](verificacion/)): cuatro buscadores exhaustivos en C++ (`tau_dfs.cpp`, `hs_independiente.cpp`, `tau_perfil.cpp`, `hs_perfil.cpp`), un recocido simulado para cotas superiores (`sa.cpp`) y un script de contraste independiente en Python (`checks.py`). Detalles y controles en §8.
 
 | $k$ | $\tau_k(k^2)$ | $2k-\tau_k(k^2)$ | Cota inferior del Teorema C afinado, $k+s_{\min}(k)$ | Estado |
 |---|---|---|---|---|
@@ -249,14 +249,14 @@ Herramientas (carpeta [`verificacion/`](verificacion/)): un buscador exhaustivo 
 | 8 | 13 | 3 | 9 | exacto |
 | 9 | 15 | 3 | 10 | exacto |
 | 10 | 16 | 4 | 12 | exacto |
-| 11 | 17 o 18 | 5 o 4 | 13 | exhaustivo hasta 16; conjunto de 18 |
+| 11 | 18 | 4 | 13 | exacto |
 | 12 | $\le 20$ | $\ge4$ | 14 | cota superior (recocido) |
 | 13 | $\le 21$ | $\ge5$ | 15 | cota superior (recocido) |
 | 17 | $\le 29$ | $\ge5$ | 19 | cota superior (recocido) |
 | 19 | $\le 33$ | $\ge5$ | 21 | cota superior (recocido) |
 | 23 | $\le 41$ | $\ge5$ | 26 | cota superior (recocido) |
 
-Equivalentemente: $r_8(64)=51$, $r_9(81)=66$, $r_{10}(100)=84$ y $103\le r_{11}(121)\le104$.
+Equivalentemente: $r_8(64)=51$, $r_9(81)=66$, $r_{10}(100)=84$ y $r_{11}(121)=103$.
 
 **La igualdad $\tau_p(p^2)=2p-3$ no se mantiene.** Los datos de $k=5,\dots,9$ y el Teorema D podrían sugerir $\tau_p(p^2)=2p-3$ para $p\ge5$ (yo mismo lo conjeturé durante el trabajo). No es así, y para $p$ grande ya se sabía por [24] y [25]. Los cálculos muestran que falla desde $p=11$: el conjunto
 
@@ -266,7 +266,9 @@ Equivalentemente: $r_8(64)=51$, $r_9(81)=66$, $r_{10}(100)=84$ y $103\le r_{11}(
 
 tiene 18 elementos y corta todas las PA de 11 términos de $[1,121]$ (y $2\cdot11-3=19$). Su estructura: la clase $4$ módulo $11$ en las filas centrales ($15,26,\dots,92$) y un elemento de cada una de las otras diez clases repartidos de modo que suplen a los términos que faltan de esa columna en los extremos. Para $p=13$ hay un conjunto de $21\lt23$ elementos formado, salvo cinco puntos, por dos PA de diferencias $11$ y $13$ que se cruzan en $106$. Los conjuntos están en [`verificacion/datos/mejores_conjuntos.txt`](verificacion/datos/mejores_conjuntos.txt).
 
-**Lo que se sabe de $\tau_{11}(121)$.** La búsqueda exhaustiva descarta todo conjunto de 16 elementos ($8{,}5\cdot10^9$ nodos), luego $\tau_{11}(121)\ge17$. Una segunda implementación independiente, con otro algoritmo (`hs_independiente.cpp`, escrita por el revisor de esta nota), llega a la misma conclusión ($5{,}6\cdot10^9$ nodos) y confirma también $\tau_9(81)=15$ y $\tau_{10}(100)=16$. El recocido encuentra 18 en un segundo y no encuentra 17 en quince minutos ($3\cdot10^9$ iteraciones), lo que sugiere, sin demostrarlo, que el valor es 18.
+**El valor $\tau_{11}(121)=18$.** Hay conjuntos de corte de 18 elementos (el de arriba y otros). Que no los hay de 16 lo establecen cuatro programas: `tau_dfs` ($8{,}5\cdot10^9$ nodos), `hs_independiente` ($5{,}6\cdot10^9$ nodos; escrito por el revisor de esta nota con otro algoritmo) y los dos buscadores por perfiles. Que no los hay de 17 lo establecen los dos buscadores por perfiles, `tau_perfil` ($7{,}0\cdot10^9$ nodos) y `hs_perfil` ($8{,}1\cdot10^8$ nodos), que recorren los 4032 perfiles posibles. Los mismos programas confirman $\tau_9(81)=15$ y $\tau_{10}(100)=16$.
+
+**Búsqueda por perfiles.** La búsqueda directa no alcanza el tamaño 17 para $k=11$. Los programas `tau_perfil.cpp` y `hs_perfil.cpp` reparten el problema según el *perfil* $(c_0,\dots,c_{k-1})$, donde $c_v\ge1$ es el número de elementos de $H$ en la fila $[vk+1,(v+1)k]$ (por simetría basta la mitad de los perfiles). Fijado el perfil, una ventana alineada de $g$ filas contiene exactamente $g+e$ elementos, con $e=\sum(c_v-1)$, y por el Lema 2 debe tocar las $g$ clases módulo $g$: tiene exactamente $e$ *colisiones* (elementos menos clases distintas). Como las colisiones no decrecen al añadir elementos, toda configuración parcial con más de $e$ colisiones en alguna ventana se descarta. Esta poda expresa la rigidez del problema —donde hay un solo elemento por fila, los elementos son distintos módulo $g$ en toda ventana de $g$ filas— y reduce el trabajo en más de un orden de magnitud. Las dos implementaciones usan búsquedas distintas (de izquierda a derecha la primera; ramificación sobre la progresión más restringida la segunda) y coinciden en todos los casos.
 
 **Cerca del umbral.** Los valores exactos justo por encima de $p(p-1)$ muestran que cada entero adicional cuesta al principio un elemento entero más:
 
@@ -279,8 +281,8 @@ tiene 18 elementos y corta todas las PA de 11 términos de $[1,121]$ (y $2\cdot1
 ## 6. Preguntas abiertas
 
 1. **El Problema 142** propiamente dicho: fórmula asintótica (o al menos orden de magnitud) de $r_k(N)$ con $k$ fijo. Sigue abierto para todo $k\ge3$.
-2. **[Abierto, planteado por Korsky [25]]** ¿Es $\tau_n(n^2)\ge(1+\eta)n$ para algún $\eta\gt0$ fijo y todo $n$ grande? Se sabe $n+n^{1-o(1)}\le\tau_n(n^2)$ [25] y, para primos, $\tau_p(p^2)\le2p-(\sqrt2-o(1))\sqrt{p/\log p}$ [25]. **[CONJETURA, de Korsky]** $\tau_n(n^2)=(2-o(1))n$. Los datos de §5 ($2k-\tau_k(k^2)=1,2,2,3,3,3,3,3,4$ para $k=2,\dots,10$) son compatibles con ella, sin demostrar nada.
-3. **[Pregunta]** ¿$\tau_{11}(121)$ es 17 o 18?
+2. **[Abierto, planteado por Korsky [25]]** ¿Es $\tau_n(n^2)\ge(1+\eta)n$ para algún $\eta\gt0$ fijo y todo $n$ grande? Se sabe $n+n^{1-o(1)}\le\tau_n(n^2)$ [25] y, para primos, $\tau_p(p^2)\le2p-(\sqrt2-o(1))\sqrt{p/\log p}$ [25]. **[CONJETURA, de Korsky]** $\tau_n(n^2)=(2-o(1))n$. Los datos de §5 ($2k-\tau_k(k^2)=1,2,2,3,3,3,3,3,4,4$ para $k=2,\dots,11$) son compatibles con ella, sin demostrar nada.
+3. **[Pregunta]** Valores exactos de $\tau_k(k^2)$ para $k\ge12$ (se sabe $\tau_{12}(144)\le20$ y $\tau_{13}(169)\le21$).
 4. **[Pregunta]** ¿Es $\tau_p(p(p-1)+j)=p-1+j$ para $0\le j\le j_0(p)$ con $j_0(p)\to\infty$? (El caso $j=1$ es el Teorema B.)
 
 ## 7. Qué es nuevo y qué no
@@ -291,7 +293,7 @@ tiene 18 elementos y corta todas las PA de 11 términos de $[1,121]$ (y $2\cdot1
   - **Teorema A y Corolario A.1.** El argumento (suprimir una clase módulo un primo mayor que todas las diferencias) aparece en la introducción de Korsky [25], y la cota superior de Truss [23] tiene esa misma forma; es conocido. Una página de seguimiento de estos problemas con IA [21] menciona además que otros modelos «encontraron y demostraron una fórmula exacta para $r_k(N)$ con $N$ acotado en términos de $k$» (sin enunciarla). En [1] aparece la desigualdad general más débil $r(k,n)\le n-\lfloor m/2\rfloor$ con $m=\lfloor n/(k-1)\rfloor$. La formulación con el menor factor primo de $k$ y el Teorema B no los he visto enunciados, pero son inmediatos.
   - **Teorema C.** Más débil que el de Truss (1991) en su forma cerrada y muy inferior al de Korsky (2026).
   - **Teorema D.** Una unidad mejor que la cota de Brown–Freedman (1989); más débil que las de Xu (2013) y Korsky (2026) para $p$ grande.
-  - **Valores de §5.** Los de $k\le7$ coinciden con las tablas de [1] y de OEIS; los de $k=8$ pueden estar en [26], que no pude consultar; los de $k=9,10$ y las cotas para $k=11$ no los he encontrado en las fuentes que sí pude leer.
+  - **Valores de §5.** Los de $k\le7$ coinciden con las tablas de [1] y de OEIS; los de $k=8$ pueden estar en [26], que no pude consultar; los de $k=9,10,11$ no los he encontrado en las fuentes que sí pude leer.
   - **La pregunta y la conjetura de §6.2** son de Korsky.
 - **Lo que sí puede considerarse aportación de esta nota:** las verificaciones formales en Lean de estos enunciados (no conozco otras), el buscador exhaustivo con sus datos y controles, la unicidad del Corolario A.2 y las observaciones (A) y (B).
 - Una conjetura que formulé durante el trabajo ($\tau_p(p^2)=2p-3$) quedó **refutada** por mis propios cálculos (y, para $p$ grande, ya lo estaba por [24] y [25]); se deja constancia en §5.
@@ -329,6 +331,14 @@ g++ -O2 -o hs_independiente hs_independiente.cpp
 ```
 
 ```bash
+g++ -O2 -o tau_perfil tau_perfil.cpp
+```
+
+```bash
+g++ -O2 -o hs_perfil hs_perfil.cpp
+```
+
+```bash
 python3 checks.py
 ```
 
@@ -338,14 +348,15 @@ python3 test_dfs.py
 
 - `checks.py` (Python puro, independiente del C++): contrasta con OEIS A003002–A003005 y con el número de conjuntos extremales de la tabla de [1] en 7 casos, comprueba los Teoremas A y B para $k\le9$, el Corolario A.2, el lema de ventanas, la construcción $H_p$ para $p\le61$, la cota del Teorema C, la relajación lineal y vuelve a verificar por fuerza bruta todos los conjuntos guardados. Salida en [`verificacion/salida.txt`](verificacion/salida.txt).
 - `check_Hp.cpp`: comprueba el Teorema D por fuerza bruta para todos los primos hasta el límite dado (`./check_Hp 499`).
-- `test_dfs.py`: compara `tau_dfs` con la búsqueda de `checks.py` en 1160 casos pequeños, con y sin podas; cero discrepancias.
+- `test_dfs.py`: compara `tau_dfs` con la búsqueda de `checks.py` en 1160 casos pequeños, con y sin podas, y comprueba que `tau_perfil` y `hs_perfil` reproducen $\tau_k(k^2)$ para $k\le8$; cero discrepancias.
 - `tau_dfs k N B` decide si existe un conjunto de corte de tamaño $\le B$. Las podas son condiciones necesarias (explicadas en la cabecera del archivo); como control, $(k,N,B)=(11,121,15)$ da «no existe» tanto con todas las podas ($3{,}9\cdot10^8$ nodos) como sin las podas de simetría y de ventanas ($1{,}1\cdot10^9$ nodos). Registros en [`verificacion/datos/exhaustivo.txt`](verificacion/datos/exhaustivo.txt).
+- `tau_perfil.cpp` y `hs_perfil.cpp`: decisión exacta en $N=k^2$ organizada por perfiles de filas (véase §5), con dos búsquedas distintas. Deciden $(k,B)=(11,17)$: no existe conjunto de corte. Registros en [`verificacion/datos/perfiles.txt`](verificacion/datos/perfiles.txt).
 - `hs_independiente.cpp`: segunda implementación exacta, independiente de `tau_dfs` (ramificación sobre la progresión más restringida y cota por empaquetamiento); la escribió el revisor independiente. Reproduce las decisiones «no existe» para $(k,N,B)=(9,81,14)$, $(10,100,15)$ y $(11,121,16)$. Registros en [`verificacion/datos/independiente.txt`](verificacion/datos/independiente.txt).
 - `sa k N B segundos semilla` busca un conjunto de tamaño $B$; solo puede demostrar existencia. Registros en [`verificacion/datos/recocido.txt`](verificacion/datos/recocido.txt).
 
 **Revisión.** Una revisión adversarial independiente (otro agente de IA, sin acceso a mis razonamientos) repasó las demostraciones caso por caso, comprobó que cada enunciado Lean dice lo que afirma la nota y reprodujo los cálculos con programas propios. No encontró errores en los teoremas; señaló una frase falsa (ya corregida, tras el Lema 2), varias imprecisiones de redacción y, sobre todo, la bibliografía previa de §4.0.
 
-**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en búsquedas exhaustivas por ordenador no formalizadas (dos implementaciones independientes coinciden). El Corolario A.1, la unicidad del Corolario A.2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva: los trabajos [22]–[26] se localizaron al final, y [22], [23], [24] y [26] no se han leído directamente (se citan según la introducción de [25] y sus registros en Crossref).
+**Limitaciones.** Las cotas inferiores de §5 para $k=9,10,11$ descansan en búsquedas exhaustivas por ordenador no formalizadas. Para $k\le10$ y para el tamaño 16 con $k=11$ coinciden cuatro programas; la exclusión del tamaño 17 con $k=11$ descansa en los dos buscadores por perfiles, que comparten la idea matemática (Lema 2 y recuento de colisiones) pero no el código de búsqueda. El Corolario A.1, la unicidad del Corolario A.2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva: los trabajos [22]–[26] se localizaron al final, y [22], [23], [24] y [26] no se han leído directamente (se citan según la introducción de [25] y sus registros en Crossref).
 
 ## Referencias
 
