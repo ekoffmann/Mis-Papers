@@ -1,0 +1,41 @@
+[OK ] OEIS: r_3(N) coincide para N <= 24 
+[OK ] OEIS: r_4(N) coincide para N <= 30 
+[OK ] OEIS: r_5(N) coincide para N <= 36 
+[OK ] OEIS: r_6(N) coincide para N <= 36 
+[OK ] Teorema A: tau_k(N) = floor(N/k) para N <= minFac(k)(k-1), 2 <= k <= 9 
+[OK ] Teorema B: tau_k(minFac(k)(k-1)+1) = minFac(k) = floor(N/k)+1, 2 <= k <= 9 
+[OK ] Corolario A.2: r_p(ip-1) = i(p-1) y el conjunto extremal es único, p = 3,5,7, 2 <= i <= p-1 
+[OK ] Número de conjuntos extremales b(k,n): coincide con la tabla de Ahmed-Dybizbanski-Snevily en 7 casos 
+[OK ] Sándwich: floor(N/k) <= tau_k(N) <= floor(N/p) para p primo <= k, N <= p(k-1), 4 <= k <= 9 
+[OK ] Lema de ventanas: cortar las k-PA de diferencia d <=> toda ventana de longitud kd es d-completa 
+[OK ] Teorema D: H_p corta todas las p-PA de [1,p^2] y |H_p| = 2p-3, primos 7 <= p <= 61 
+[OK ] p = 5: {5,10,15,16,17,19,23} corta todas las 5-PA de [1,25] 
+[OK ] p = 5: la fórmula H_5 NO funciona (por eso el teorema pide p >= 7) 
+[OK ] tau_k(k^2) = 3, 4, 6, 7, 9 para k = 2..6 (búsqueda exhaustiva en Python) 
+[OK ] Teorema C: tau_k(k^2) >= k + s_min(k) para k = 2..8 {2: (3, 2), 3: (4, 4), 4: (6, 5), 5: (7, 6), 6: (9, 7), 7: (11, 8), 8: (13, 9)}
+[OK ] Forma cerrada: s_closed(k) <= s_min(k) para 2 <= k <= 20000 
+[OK ] Forma cerrada: s_min(k) > (sqrt((k-2)/2) - 1)/2 para 2 <= k <= 20000 
+   k -> k + s_min(k): {5: 6, 7: 8, 11: 13, 13: 15, 17: 19, 19: 21, 23: 26, 101: 107, 1009: 1027, 10007: 10063}
+   s_min(k)/sqrt(k): {101: 0.597, 1009: 0.567, 10007: 0.56, 100003: 0.557}
+   k=2 N=4 |H|=3 (2k-3=1) válido=True
+   k=3 N=9 |H|=4 (2k-3=3) válido=True
+   k=4 N=16 |H|=6 (2k-3=5) válido=True
+   k=5 N=25 |H|=7 (2k-3=7) válido=True
+   k=6 N=36 |H|=9 (2k-3=9) válido=True
+   k=7 N=49 |H|=11 (2k-3=11) válido=True
+   k=8 N=64 |H|=13 (2k-3=13) válido=True
+   k=9 N=81 |H|=15 (2k-3=15) válido=True
+   k=10 N=100 |H|=16 (2k-3=17) válido=True
+   k=11 N=121 |H|=18 (2k-3=19) válido=True
+   k=12 N=144 |H|=20 (2k-3=21) válido=True
+   k=13 N=169 |H|=21 (2k-3=23) válido=True
+   k=17 N=289 |H|=29 (2k-3=31) válido=True
+   k=19 N=361 |H|=33 (2k-3=35) válido=True
+   k=23 N=529 |H|=41 (2k-3=43) válido=True
+   k=11 N=230 |H|=30 válido=True
+[OK ] Los 16 conjuntos guardados cortan todas las PA (y cumplen el lema de clases) 
+[OK ] Construcción de dígitos: {x < p^m sin dígito p-1} no contiene p-PA y tiene (p-1)^m elementos 
+[OK ] Relajación lineal en N = k^2: el óptimo fraccionario es exactamente k (k = 3,5,7,8,11) 
+
+TODAS LAS COMPROBACIONES PASAN
+casos comprobados: 1160, discrepancias: 0
