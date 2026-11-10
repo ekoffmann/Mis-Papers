@@ -1,14 +1,15 @@
 # Registro de verificacion - Problema 142 de Erdos (Lean 4 + Mathlib)
-# Fecha: 2026-11-10T00:03:38Z
+# Fecha: 2026-11-10T00:38:09Z
 # Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
 # Mathlib rev: 56a005855ea17e0b0958f73ec801ae140b0a1679
 # Comando: lake build   (desde Erdos-142/lean, compilacion limpia de los modulos Erdos142.*)
 # Codigo de salida: 0
 # sha256 de los fuentes:
-#   f6bb3c8b1e9d6feaf2237da2eb0a44e36b6a5dc6fecf6731863750f5b93881db  Erdos142.lean
+#   e41acddb5a7bb08e5dbf53c0bc2bf4e127cf402fd7e28a8447a73ad5a28b3778  Erdos142.lean
+#   0adbed161078a73c6badbfd3c9a16efed70b564faef91facc3e7c5ebc1ef4d8e  Erdos142/Construccion.lean
 #   a13fc0c91c685a25aa8cc892c9555336234dd84e261bdf527f2c2669c160eaab  Erdos142/Exact.lean
 #   c7c4cf8bc7237ccc22701bc25c9d0c26a2e456f00a087d7aec194743f4767e37  Erdos142/FormalConjectures.lean
-#   4ba06c91cd1fa0e1c48e53f5c983089571b671c1f6f9de0352202311cf298bbd  Erdos142/Resumen.lean
+#   cf2fffbaa9b42b75a2c84882872dfd9b2a5b1b5ca5d1539807c7d2a00990f49a  Erdos142/Resumen.lean
 #   e09d4f08a02829c2950492c82f64eae686d8324e16cea493d991cd1ce36beefd  Erdos142/Sqrt.lean
 #   81a4fc212baad3ea783a6fe3e1e022d940d44126843d01506cb177c549462be5  Erdos142/Threshold.lean
 # Auditoria de palabras prohibidas (sorry|admit|axiom|native_decide|unsafe|implemented_by|opaque|extern): 0 coincidencias
@@ -31,29 +32,34 @@ Erdos142/Threshold.lean:189:0: 'Erdos142.card_ge_of_mem' depends on axioms: [pro
 Erdos142/Threshold.lean:190:0: 'Erdos142.r_first_fail' depends on axioms: [propext, Classical.choice, Quot.sound]
 Erdos142/Sqrt.lean:375:0: 'Erdos142.card_hitting_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
 Erdos142/Sqrt.lean:376:0: 'Erdos142.r_sq_add_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:52:0: 'Erdos142.r_add_div_le' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:53:0: 'Erdos142.le_r_of_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:54:0: 'Erdos142.r_eq_of_le_minFac' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:55:0: 'Erdos142.r_prime_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:56:0: 'Erdos142.r_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:57:0: 'Erdos142.r_succ_range_le' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:58:0: 'Erdos142.r_prime_succ_range' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:59:0: 'Erdos142.card_ge_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:60:0: 'Erdos142.r_first_fail' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:61:0: 'Erdos142.card_hitting_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:62:0: 'Erdos142.r_sq_add_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:63:0: 'Erdos142.maxCard_one' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:64:0: 'Erdos142.maxCard_two' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:65:0: 'Erdos142.erdos_142_statement_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:66:0: 'Erdos142.erdos_142_isTheta_statement_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:67:0: 'Erdos142.maxCard_eq_extremalNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:68:0: 'Erdos142.erdos_142_variants_lower_of_quantitative' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:69:0: 'Erdos142.r_eq_extremalNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:70:0: 'Erdos142.r_eq_maxCard' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:71:0: 'Erdos142.resumen_rango' depends on axioms: [propext, Classical.choice, Quot.sound]
-Erdos142/Resumen.lean:72:0: 'Erdos142.resumen_cuadrado' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Construccion.lean:268:0: 'Erdos142.Hset_hits' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Construccion.lean:269:0: 'Erdos142.r_prime_sq_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:64:0: 'Erdos142.r_add_div_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:65:0: 'Erdos142.le_r_of_coprime' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:66:0: 'Erdos142.r_eq_of_le_minFac' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:67:0: 'Erdos142.r_prime_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:68:0: 'Erdos142.r_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:69:0: 'Erdos142.r_succ_range_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:70:0: 'Erdos142.r_prime_succ_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:71:0: 'Erdos142.card_ge_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:72:0: 'Erdos142.r_first_fail' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:73:0: 'Erdos142.card_hitting_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:74:0: 'Erdos142.r_sq_add_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:75:0: 'Erdos142.Hset_hits' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:76:0: 'Erdos142.r_prime_sq_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:77:0: 'Erdos142.maxCard_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:78:0: 'Erdos142.maxCard_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:79:0: 'Erdos142.erdos_142_statement_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:80:0: 'Erdos142.erdos_142_isTheta_statement_unsatisfiable' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:81:0: 'Erdos142.maxCard_eq_extremalNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:82:0: 'Erdos142.erdos_142_variants_lower_of_quantitative' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:83:0: 'Erdos142.r_eq_extremalNumber' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:84:0: 'Erdos142.r_eq_maxCard' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:85:0: 'Erdos142.resumen_rango' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:86:0: 'Erdos142.resumen_cuadrado' depends on axioms: [propext, Classical.choice, Quot.sound]
+Erdos142/Resumen.lean:87:0: 'Erdos142.resumen_primo_cuadrado' depends on axioms: [propext, Classical.choice, Quot.sound]
 #
 # Ultimas lineas de la salida de lake build:
-info: Erdos142/Resumen.lean:72:0: 'Erdos142.resumen_cuadrado' depends on axioms: [propext, Classical.choice, Quot.sound]
-✔ [9052/9053] Built Erdos142 (4.3s)
-Build completed successfully (9053 jobs).
+info: Erdos142/Resumen.lean:87:0: 'Erdos142.resumen_primo_cuadrado' depends on axioms: [propext, Classical.choice, Quot.sound]
+✔ [9053/9054] Built Erdos142 (3.3s)
+Build completed successfully (9054 jobs).

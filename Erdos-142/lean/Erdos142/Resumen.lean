@@ -1,6 +1,7 @@
 import Erdos142.Exact
 import Erdos142.Threshold
 import Erdos142.Sqrt
+import Erdos142.Construccion
 import Erdos142.FormalConjectures
 
 /-!
@@ -15,6 +16,8 @@ en los demás módulos y vuelve a imprimir los axiomas de los que depende cada u
 * `Erdos142.resumen_rango` : fórmula exacta `r_k(N) = N - ⌊N/k⌋` para `N ≤ q (k - 1)` (con `q` el
   menor factor primo de `k`) y fallo de la fórmula en `N = q (k - 1) + 1`.
 * `Erdos142.resumen_cuadrado` : en `N = k²`, `r_k(k²) ≤ k² - k - s - 1` si `8 s² + 8 s + 4 ≤ k`.
+* `Erdos142.resumen_primo_cuadrado` : para `p ≥ 7` primo,
+  `(p - 1)² + 2 ≤ r_p(p²) ≤ p² - p - 1`.
 -/
 
 namespace Erdos142
@@ -47,6 +50,15 @@ theorem resumen_cuadrado (k s : ℕ) (hk : 2 ≤ k) (hs : 8 * s ^ 2 + 8 * s + 4 
     exact Nat.mul_div_cancel_left k (by omega)
   omega
 
+/-- **En `N = p²`, `p ≥ 7` primo.** `(p - 1)² + 2 ≤ r_p(p²)` (construcción explícita con
+`2p - 3` puntos eliminados) y `r_p(p²) + p + 1 ≤ p²` (hace falta al menos un punto más que los
+`p` de la cota de bloques). -/
+theorem resumen_primo_cuadrado (p : ℕ) (hp : p.Prime) (hp7 : 7 ≤ p) :
+    (p - 1) ^ 2 + 2 ≤ r p (p ^ 2) ∧ r p (p ^ 2) + p + 1 ≤ p ^ 2 := by
+  refine ⟨r_prime_sq_ge p hp hp7, ?_⟩
+  have h := r_sq_add_lt p 0 (by omega) (by omega)
+  omega
+
 end Erdos142
 
 #print axioms Erdos142.r_add_div_le
@@ -60,6 +72,8 @@ end Erdos142
 #print axioms Erdos142.r_first_fail
 #print axioms Erdos142.card_hitting_sq
 #print axioms Erdos142.r_sq_add_lt
+#print axioms Erdos142.Hset_hits
+#print axioms Erdos142.r_prime_sq_ge
 #print axioms Erdos142.maxCard_one
 #print axioms Erdos142.maxCard_two
 #print axioms Erdos142.erdos_142_statement_unsatisfiable
@@ -70,3 +84,4 @@ end Erdos142
 #print axioms Erdos142.r_eq_maxCard
 #print axioms Erdos142.resumen_rango
 #print axioms Erdos142.resumen_cuadrado
+#print axioms Erdos142.resumen_primo_cuadrado

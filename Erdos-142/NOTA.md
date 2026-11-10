@@ -2,7 +2,7 @@
 
 **Nota de investigación (sin revisión por pares), elaborada con asistencia de IA. Versión del 10‑11‑2026.**
 
-> **Advertencia.** El Problema 142 de Erdős **sigue abierto** y esta nota **no lo resuelve**. Contiene (i) una revisión del estado del arte con fuentes verificadas, (ii) tres observaciones sobre las formalizaciones públicas del problema y (iii) resultados elementales, varios de ellos verificados en Lean 4, en un régimen **distinto** del que pide el problema (progresiones largas, $N \le k^2$). Etiquetas: **[PROBADO]** = verificado en Lean 4 + Mathlib (compila, sin `sorry`, solo axiomas estándar); **[PLAUSIBLE]** = demostración escrita a mano, no formalizada; **[NUMÉRICO]** = comprobado por ordenador; **[CONJETURA]** = sin demostración.
+> **Advertencia.** El Problema 142 de Erdős **sigue abierto** y esta nota **no lo resuelve**. Contiene (i) una revisión del estado del arte con fuentes verificadas, (ii) tres observaciones sobre las formalizaciones públicas del problema y (iii) resultados elementales, verificados en Lean 4, en un régimen **distinto** del que pide el problema (progresiones largas, $N \le k^2$). Etiquetas: **[PROBADO]** = verificado en Lean 4 + Mathlib (compila, sin `sorry`, solo axiomas estándar); **[PLAUSIBLE]** = demostración escrita a mano, no formalizada; **[NUMÉRICO]** = comprobado por ordenador; **[CONJETURA]** = sin demostración.
 
 ## 0. Resumen
 
@@ -14,7 +14,7 @@ Sea $r_k(N)$ el mayor tamaño de un subconjunto de $\lbrace 1,\dots,N\rbrace$ si
    - **Teorema A [PROBADO]:** $r_k(N)=N-\lfloor N/k\rfloor$ para todo $N\le q(k-1)$.
    - **Teorema B [PROBADO]:** el rango es óptimo: $r_k(q(k-1)+1)=N-\lfloor N/k\rfloor-1$.
    - **Teorema C [PROBADO]:** en $N=k^2$ hace falta un exceso de orden $\sqrt{k}$: si $\tau_k(k^2)=k+s$ entonces $k \lt 8s^2+8s+4$.
-   - **Teorema D [PLAUSIBLE + NUMÉRICO]:** $\tau_p(p^2)\le 2p-3$ para todo primo $p\ge 5$ (construcción explícita).
+   - **Teorema D [PROBADO para $p\ge7$]:** $\tau_p(p^2)\le 2p-3$ para todo primo $p\ge 5$ (construcción explícita; el caso $p=5$ por cálculo exacto).
 4. **Cálculos exactos (§5) [NUMÉRICO].** $\tau_k(k^2)=3,4,6,7,9,11,13,15,16$ para $k=2,\dots,10$ y $17\le\tau_{11}(121)\le 18$. La conjetura natural $\tau_p(p^2)=2p-3$ (cierta para $p=5,7$) es **falsa** para $p=11,13,17,19,23$.
 5. **Preguntas abiertas (§6)** y **qué es nuevo y qué no (§7)**.
 
@@ -100,7 +100,7 @@ es decir, $\exp(-c(\log\log N)^{1+\eta})$. Basta para el Problema 3 y para (B), 
 
 ## 4. Progresiones largas: el régimen $N\le k^2$
 
-Cuando $k$ crece con $N$ el problema cambia de naturaleza: $r_k(N)$ está muy cerca de $N$ y lo interesante es el complemento $\tau_k(N)$. Archivos Lean: [`Exact.lean`](lean/Erdos142/Exact.lean), [`Threshold.lean`](lean/Erdos142/Threshold.lean), [`Sqrt.lean`](lean/Erdos142/Sqrt.lean).
+Cuando $k$ crece con $N$ el problema cambia de naturaleza: $r_k(N)$ está muy cerca de $N$ y lo interesante es el complemento $\tau_k(N)$. Archivos Lean: [`Exact.lean`](lean/Erdos142/Exact.lean), [`Threshold.lean`](lean/Erdos142/Threshold.lean), [`Sqrt.lean`](lean/Erdos142/Sqrt.lean), [`Construccion.lean`](lean/Erdos142/Construccion.lean).
 
 ### 4.1. Dos lemas básicos
 
@@ -194,13 +194,13 @@ es decir $(s+1)k+1\le (s+1)(8s^2+8s+4)$, que da $k\lt 8s^2+8s+4$. Si no es posit
 
 La construcción clásica de dígitos da $r_p(p^m)\ge(p-1)^m$ para $p$ primo: los enteros de $[0,p^m)$ sin el dígito $p-1$ en base $p$ no contienen PAs de $p$ términos (si $p^e$ es la mayor potencia de $p$ que divide a $d$, el dígito de posición $e$ de $a+id$ recorre todos los valores módulo $p$ cuando $i=0,\dots,p-1$). Es la observación de Erdős–Turán [8] para $p=3$ y el origen de la conjetura de Szekeres (véase [1]). En $N=p^2$ da $\tau_p(p^2)\le 2p-1$.
 
-**Teorema D [PLAUSIBLE + NUMÉRICO].** Sea $p\ge7$ primo, $W=[2p+3,3p-2]$ y
+**Teorema D [PROBADO: `Hset_hits`, `r_prime_sq_ge`].** Sea $p\ge7$ primo, $W=[2p+3,3p-2]$ y
 
 ```math
 H_p=\{2,\ p+1,\ 2p-1\}\ \cup\ W\ \cup\ \{jp : 3\le j\le p\}.
 ```
 
-Entonces $H_p$ corta todas las PA de $p$ términos de $[1,p^2]$ y $\lvert H_p\rvert=2p-3$. Por tanto $r_p(p^2)\ge(p-1)^2+2$. Para $p=5$ también $\tau_5(25)=7=2p-3$, con el conjunto $\lbrace5,10,15,16,17,19,23\rbrace$.
+Entonces $H_p$ corta todas las PA de $p$ términos de $[1,p^2]$ y $\lvert H_p\rvert=2p-3$. Por tanto $r_p(p^2)\ge(p-1)^2+2$. Para $p=5$ también $\tau_5(25)=7=2p-3$, con el conjunto $\lbrace5,10,15,16,17,19,23\rbrace$ **[NUMÉRICO]**.
 
 *Demostración.* Sea $P=\lbrace a+id:0\le i\le p-1\rbrace\subseteq[1,p^2]$. Entonces $(p-1)d\le p^2-1$, luego $d\le p+1$.
 
@@ -216,7 +216,7 @@ Entonces $H_p$ corta todas las PA de $p$ términos de $[1,p^2]$ y $\lvert H_p\rv
 
 Los tres bloques de $H_p$ son disjuntos y suman $3+(p-4)+(p-2)=2p-3$. $\square$
 
-Comprobación por fuerza bruta: `check_Hp.cpp` verifica que $H_p$ corta todas las PA para los 92 primos $7\le p\le499$ (y `checks.py`, de forma independiente, para $p\le61$); la fórmula falla para $p=5$, y por eso el teorema pide $p\ge7$.
+La demostración anterior es la que sigue la formalización Lean (lemas `hits_succ`, `hits_self`, `hits_two`, `hits_one`). Comprobación adicional por fuerza bruta: `check_Hp.cpp` verifica que $H_p$ corta todas las PA para los 92 primos $7\le p\le499$ (y `checks.py`, de forma independiente, para $p\le61$); la fórmula falla para $p=5$, y por eso el teorema pide $p\ge7$.
 
 ## 5. Cálculos exactos en $N=k^2$
 
@@ -287,7 +287,7 @@ lake exe cache get
 lake build
 ```
 
-Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 21 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
+Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 24 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
 
 **Cálculos.** Desde `Erdos-142/verificacion`:
 
@@ -317,7 +317,7 @@ python3 test_dfs.py
 - `tau_dfs k N B` decide si existe un conjunto de corte de tamaño $\le B$. Las podas son condiciones necesarias (explicadas en la cabecera del archivo); como control, $(k,N,B)=(11,121,15)$ da «no existe» tanto con todas las podas ($3{,}9\cdot10^8$ nodos) como sin las podas de simetría y de ventanas ($1{,}1\cdot10^9$ nodos). Registros en [`verificacion/datos/exhaustivo.txt`](verificacion/datos/exhaustivo.txt).
 - `sa k N B segundos semilla` busca un conjunto de tamaño $B$; solo puede demostrar existencia. Registros en [`verificacion/datos/recocido.txt`](verificacion/datos/recocido.txt).
 
-**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en una búsqueda exhaustiva por ordenador no formalizada (validada como se indica). Los Teoremas D y los corolarios A.1 y A.2 no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva.
+**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en una búsqueda exhaustiva por ordenador no formalizada (validada como se indica). Los Corolarios A.1 y A.2, el Lema 2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva.
 
 ## Referencias
 
