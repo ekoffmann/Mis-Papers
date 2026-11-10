@@ -30,7 +30,7 @@ lake build
 | Archivo | Teoremas principales | Contenido |
 |---|---|---|
 | `Erdos142/Exact.lean` (346 líneas) | `r_add_div_le`, `le_r_of_coprime`, `r_eq_of_le_minFac`, `r_prime_eq`, `r_sandwich`, `r_succ_range_le`, `r_prime_succ_range` | Definición de `r k N`; cota de bloques; fórmula exacta $r_k(N)=N-\lfloor N/k\rfloor$ para $N\le q(k-1)$ (Teorema A de la nota). Solo `import Mathlib`. |
-| `Erdos142/Threshold.lean` (190) | `card_ge_of_mem`, `r_first_fail` | El rango de la fórmula exacta es óptimo para todo $k\ge2$ (Teorema B). |
+| `Erdos142/Threshold.lean` (190) | `card_ge_of_mem`, `r_first_fail` | La fórmula exacta falla en $N=q(k-1)+1$ para todo $k\ge2$ (Teorema B): $q(k-1)$ es el mayor $M$ tal que vale para todo $N\le M$. |
 | `Erdos142/Sqrt.lean` (376) | `card_hitting_sq`, `r_sq_add_lt` | Cota inferior en $N=k^2$: exceso de orden $\sqrt k$ (Teorema C). |
 | `Erdos142/Construccion.lean` (269) | `Hset_hits`, `r_prime_sq_ge` | Conjunto de corte explícito de $2p-3$ elementos en $N=p^2$, $p\ge7$ primo (Teorema D): $r_p(p^2)\ge(p-1)^2+2$. |
 | `Erdos142/FormalConjectures.lean` (341) | `maxCard_one`, `maxCard_two`, `erdos_142_statement_unsatisfiable`, `erdos_142_isTheta_statement_unsatisfiable`, `maxCard_eq_extremalNumber`, `erdos_142_variants_lower_of_quantitative` | Observaciones (A) y (B) de la nota sobre los enunciados de `formal-conjectures` y `openai/math` (definiciones copiadas literalmente). |

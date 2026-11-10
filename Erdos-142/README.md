@@ -34,7 +34,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 
 **Progresiones largas** (los cuatro teoremas están verificados en Lean; entre paréntesis, su relación con lo publicado).
 
-- **[PROBADO]** Teorema A: $r_k(N)=N-\lfloor N/k\rfloor$ para todo $N\le q(k-1)$. (Argumento conocido: Truss [23], Korsky [25].)
+- **[PROBADO]** Teorema A: $r_k(N)=N-\lfloor N/k\rfloor$ para todo $N\le q(k-1)$. (Argumento conocido: aparece en Korsky [25]; la cota superior de Truss [23] tiene la misma forma.)
 - **[PROBADO]** Teorema B: la fórmula falla en $N=q(k-1)+1$, donde $r_k(N)=N-\lfloor N/k\rfloor-1$. (No lo he visto enunciado; es inmediato.)
 - **[PROBADO]** Teorema C: si $\tau_k(k^2)=k+s$ entonces $k\lt8s^2+8s+4$, es decir, exceso de orden $\sqrt k$. (**Más débil** que Truss 1991 [23], y muy inferior a Korsky 2026 [25]: $\tau_n(n^2)\ge n+n^{1-o(1)}$.)
 - **[PROBADO]** Teorema D: $\tau_p(p^2)\le2p-3$ para todo primo $p\ge7$, con un conjunto explícito. (Una unidad mejor que Brown–Freedman 1989 [22]; **más débil** que Xu 2013 [24] y Korsky [25] para $p$ grande.)
