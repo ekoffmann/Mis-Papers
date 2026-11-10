@@ -188,7 +188,7 @@ es decir $(s+1)k+1\le (s+1)(8s^2+8s+4)$, que da $k\lt 8s^2+8s+4$. Si no es posit
 
 **Versión afinada [PLAUSIBLE + NUMÉRICO].** Los pasos (a) y (b) dan más: si $D(k,s)$ es la menor suma posible de $k+s-1$ enteros $\ge0$ en la que el valor $j$ aparece a lo sumo $s+j$ veces, entonces $D(k,s)\le k(s+1)-1$. Llamando $s_{\min}(k)$ al menor $s$ que lo cumple, $\tau_k(k^2)\ge k+s_{\min}(k)$. Numéricamente $s_{\min}(k)/\sqrt k\to c_0\approx0{,}556$ (véase `checks.py`); por ejemplo $s_{\min}(k)=1$ para $3\le k\le9$, $2$ para $10\le k\le22$ y $3$ para $k=23$.
 
-**Consecuencia para $N$ grande.** Como $r_k$ es subaditiva, $\tau_k$ es superaditiva y $\tau_k(N)\ge\lfloor N/k^2\rfloor\,\tau_k(k^2)$: para $N$ múltiplo de $k^2$, $r_k(N)\le N-(1+c/\sqrt k)N/k$. Con los valores exactos de §5, $r_5(N)\le \tfrac{18}{25}N$ y $r_7(N)\le\tfrac{38}{49}N$ para $N$ múltiplo de $25$ y de $49$.
+**Consecuencia para $N$ grande.** Del Teorema C se sigue $\tau_k(k^2)\ge k+\sqrt k/5$ para todo $k\ge4$ (para $4\le k\le19$ da $s\ge1$; para $k\ge20$, $\tfrac12(\sqrt{(k-2)/2}-1)\ge\sqrt k/5$). Como $r_k$ es subaditiva, $\tau_k$ es superaditiva y $\tau_k(N)\ge\lfloor N/k^2\rfloor\,\tau_k(k^2)$: para $N$ múltiplo de $k^2$, $r_k(N)\le N-\big(1+\tfrac{1}{5\sqrt k}\big)N/k$. Con los valores exactos de §5, $r_5(N)\le \tfrac{18}{25}N$ y $r_7(N)\le\tfrac{38}{49}N$ para $N$ múltiplo de $25$ y de $49$.
 
 ### 4.4. Cota superior en $N=p^2$
 
