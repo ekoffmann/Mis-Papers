@@ -100,7 +100,7 @@ es decir, $\exp(-c(\log\log N)^{1+\eta})$. Basta para el Problema 3 y para (B), 
 
 ## 4. Progresiones largas: el régimen $N\le k^2$
 
-Cuando $k$ crece con $N$ el problema cambia de naturaleza: $r_k(N)$ está muy cerca de $N$ y lo interesante es el complemento $\tau_k(N)$. Archivos Lean: [`Exact.lean`](lean/Erdos142/Exact.lean), [`Threshold.lean`](lean/Erdos142/Threshold.lean), [`Sqrt.lean`](lean/Erdos142/Sqrt.lean), [`Construccion.lean`](lean/Erdos142/Construccion.lean).
+Cuando $k$ crece con $N$ el problema cambia de naturaleza: $r_k(N)$ está muy cerca de $N$ y lo interesante es el complemento $\tau_k(N)$. Archivos Lean: [`Exact.lean`](lean/Erdos142/Exact.lean), [`Threshold.lean`](lean/Erdos142/Threshold.lean), [`Sqrt.lean`](lean/Erdos142/Sqrt.lean), [`Construccion.lean`](lean/Erdos142/Construccion.lean), [`Ventanas.lean`](lean/Erdos142/Ventanas.lean).
 
 ### 4.0. Antecedentes: lo que ya se sabía
 
@@ -122,7 +122,7 @@ Este régimen lo introdujeron Brown y Freedman [22], que definieron $f(N,k)=\tau
 
 *Demostración.* Los bloques $[jk+1,(j+1)k]$, $0\le j\lt\lfloor N/k\rfloor$, son PAs disjuntas de $k$ términos (diferencia 1). $\square$
 
-**Lema 2 (forma de ventanas) [PLAUSIBLE + NUMÉRICO].** Sea $d\ge1$ con $kd\le N$. Un conjunto $H$ corta todas las PA de $k$ términos y diferencia $d$ de $[1,N]$ si y solo si, para todo intervalo $I\subseteq[1,N]$ de $kd$ enteros consecutivos, $H\cap I$ contiene elementos de las $d$ clases de restos módulo $d$.
+**Lema 2 (forma de ventanas) [PROBADO: `window_iff`].** Sea $d\ge1$ con $kd\le N$. Un conjunto $H$ corta todas las PA de $k$ términos y diferencia $d$ de $[1,N]$ si y solo si, para todo intervalo $I\subseteq[1,N]$ de $kd$ enteros consecutivos, $H\cap I$ contiene elementos de las $d$ clases de restos módulo $d$.
 
 *Demostración.* En un intervalo de longitud $kd$ cada clase módulo $d$ tiene exactamente $k$ elementos, que forman una PA de $k$ términos y diferencia $d$. Recíprocamente, la PA $a,a+d,\dots,a+(k-1)d$ está contenida en algún intervalo de longitud $kd$ dentro de $[1,N]$ (porque $kd\le N$) y es la clase de $a$ en ese intervalo. $\square$
 
@@ -308,7 +308,7 @@ lake exe cache get
 lake build
 ```
 
-Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 25 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
+Resultado registrado en [`lean/registro_verificacion.txt`](lean/registro_verificacion.txt): código de salida 0, sin `sorry`, y los 26 teoremas dependen solo de `propext`, `Classical.choice` y `Quot.sound`. `Resumen.lean` demuestra además que la función `r` usada aquí coincide con `extremalNumber` de `openai/math` (por definición) y, para $k\ge2$, con `maxCard` de `formal-conjectures`.
 
 **Cálculos.** Desde `Erdos-142/verificacion`:
 
@@ -345,7 +345,7 @@ python3 test_dfs.py
 
 **Revisión.** Una revisión adversarial independiente (otro agente de IA, sin acceso a mis razonamientos) repasó las demostraciones caso por caso, comprobó que cada enunciado Lean dice lo que afirma la nota y reprodujo los cálculos con programas propios. No encontró errores en los teoremas; señaló una frase falsa (ya corregida, tras el Lema 2), varias imprecisiones de redacción y, sobre todo, la bibliografía previa de §4.0.
 
-**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en búsquedas exhaustivas por ordenador no formalizadas (dos implementaciones independientes coinciden). El Corolario A.1, la unicidad del Corolario A.2, el Lema 2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva: los trabajos [22]–[26] se localizaron al final, y [22], [23], [24] y [26] no se han leído directamente (se citan según la introducción de [25] y sus registros en Crossref).
+**Limitaciones.** Las cotas inferiores de §5 para $k=10,11$ descansan en búsquedas exhaustivas por ordenador no formalizadas (dos implementaciones independientes coinciden). El Corolario A.1, la unicidad del Corolario A.2 y la versión afinada del Teorema C no están formalizados. La revisión bibliográfica del régimen de progresiones largas no es exhaustiva: los trabajos [22]–[26] se localizaron al final, y [22], [23], [24] y [26] no se han leído directamente (se citan según la introducción de [25] y sus registros en Crossref).
 
 ## Referencias
 

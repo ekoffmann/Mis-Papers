@@ -1,4 +1,5 @@
 import Erdos142.Exact
+import Erdos142.Ventanas
 import Erdos142.Threshold
 import Erdos142.Sqrt
 import Erdos142.Construccion
@@ -99,6 +100,7 @@ end Erdos142
 #print axioms Erdos142.r_sandwich
 #print axioms Erdos142.r_succ_range_le
 #print axioms Erdos142.r_prime_succ_range
+#print axioms Erdos142.window_iff
 #print axioms Erdos142.card_ge_of_mem
 #print axioms Erdos142.r_first_fail
 #print axioms Erdos142.card_hitting_sq

@@ -10,7 +10,7 @@ Lo que se entrega, todo comprobable:
 
 - una **revisión del estado del arte** con cada fuente verificada;
 - **tres observaciones sobre las formalizaciones públicas** del problema, dos de ellas demostradas en Lean;
-- **25 teoremas verificados en Lean 4** sobre el régimen de progresiones largas ($N\le k^2$);
+- **26 teoremas verificados en Lean 4** sobre el régimen de progresiones largas ($N\le k^2$) y los enunciados formales;
 - **valores exactos por ordenador** en $N=k^2$ hasta $k=10$, confirmados por dos programas independientes.
 
 **Advertencia sobre la novedad.** Una revisión independiente localizó, al final del trabajo, bibliografía previa sobre ese régimen (Brown–Freedman 1989, Truss 1991, Xu 2013 y una prepublicación de Korsky de 2026) que ya contiene versiones **más fuertes** de dos de mis cuatro teoremas. Lo que queda como aportación propia es modesto: la verificación formal, los datos exactos para $k=9,10$ y la cota para $k=11$, y las observaciones sobre los enunciados formales.
@@ -74,7 +74,7 @@ Notación: $\tau_k(N)=N-r_k(N)$ es el menor tamaño de un conjunto que corta tod
 | Ruta | Contenido |
 |---|---|
 | [`NOTA.md`](NOTA.md), [`NOTA.pdf`](NOTA.pdf) | Nota completa: estado del arte, antecedentes, teoremas con demostración, cálculos, preguntas abiertas |
-| [`lean/`](lean/) | Proyecto Lean 4 + Mathlib (6 módulos, 25 teoremas) y [`registro_verificacion.txt`](lean/registro_verificacion.txt) |
+| [`lean/`](lean/) | Proyecto Lean 4 + Mathlib (7 módulos, 26 teoremas) y [`registro_verificacion.txt`](lean/registro_verificacion.txt) |
 | [`verificacion/`](verificacion/) | `tau_dfs.cpp` y `hs_independiente.cpp` (dos búsquedas exhaustivas independientes), `sa.cpp` (recocido), `check_Hp.cpp`, `checks.py` y `test_dfs.py` (contrastes), `tabla.py`, y [`datos/`](verificacion/datos/) |
 | [`herramientas/build_pdf.py`](herramientas/build_pdf.py) | Generación del PDF |
 

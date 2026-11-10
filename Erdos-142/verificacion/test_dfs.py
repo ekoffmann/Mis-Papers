@@ -32,4 +32,23 @@ partes = [nsol(7, 49, 11, "--all", "--nosym", "--split", 3, j) for j in range(3)
 print(f"particion: total={total}, partes={partes}, suma={sum(partes)}")
 if total != sum(partes) or total != 1257:
     bad += 1
+
+# Tercer buscador (tau_perfil, búsqueda por perfiles de filas) en N = k^2: debe dar los mismos
+# valores que la búsqueda en Python (k <= 6) y que tau_dfs (k = 7, 8), y sus conjuntos deben cortar
+# todas las progresiones.
+for nombre in ("tau_perfil", "hs_perfil"):
+    exe_p = os.path.join(os.path.dirname(os.path.abspath(__file__)), nombre)
+    if not os.path.exists(exe_p):
+        print(f"({nombre} no compilado; se omite su contraste)")
+        continue
+    for kk, t in checks.TAU_SQ.items():
+        o1 = subprocess.run([exe_p, str(kk), str(t - 1)], capture_output=True, text=True).stdout if t - 1 >= kk else " UNSAT "
+        o2 = subprocess.run([exe_p, str(kk), str(t)], capture_output=True, text=True).stdout
+        mm = re.search(r"H=([\d,]+)", o2)
+        H = list(map(int, mm.group(1).split(","))) if mm else []
+        okset = len(H) == t and checks.unhit(kk, kk * kk, H) == 0
+        if " UNSAT" not in o1 or " SAT " not in o2 or not okset:
+            bad += 1
+            print("DISCREPANCIA", nombre, kk, t)
+    print(f"{nombre}: valores de tau_k(k^2) para k = 2..8 reproducidos, discrepancias acumuladas: {bad}")
 sys.exit(1 if bad else 0)
